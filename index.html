@@ -516,6 +516,12 @@
     /* ===== ABOUT ===== */
     .about { background: var(--white); }
 
+    .about-logo {
+      width: 220px;
+      height: auto;
+      margin-bottom: 2rem;
+    }
+
     .about-content {
       max-width: 680px;
       margin: 0 auto;
@@ -863,6 +869,7 @@
   <!-- ABOUT -->
   <section class="about section-pad" id="about">
     <div class="section-header reveal">
+      <img src="logo.png" alt="Elite Travel" class="about-logo">
       <p class="section-eyebrow" data-en="Our Story" data-cn="我们的故事">Our Story</p>
       <h2 class="section-title" data-en-html="Passion for Travel,<br><em>Personalized</em> for You" data-cn-html="热爱旅行，<br>为您<em>量身定制</em>">Passion for Travel,<br><em>Personalized</em> for You</h2>
       <div class="section-divider"></div>
@@ -1063,28 +1070,26 @@
         const w = window.innerWidth;
         const h = docH;
 
-        // Wide, gentle S-curves with extra waypoints at turns for big rounded arcs
-        const points = [
-          { x: w * 0.82, y: h * 0.02 },
-          { x: w * 0.60, y: h * 0.08 },
-          { x: w * 0.30, y: h * 0.14 },
-          { x: w * 0.15, y: h * 0.20 },
-          { x: w * 0.18, y: h * 0.27 },
-          { x: w * 0.35, y: h * 0.32 },
-          { x: w * 0.65, y: h * 0.37 },
-          { x: w * 0.82, y: h * 0.42 },
-          { x: w * 0.85, y: h * 0.48 },
-          { x: w * 0.70, y: h * 0.54 },
-          { x: w * 0.40, y: h * 0.59 },
-          { x: w * 0.18, y: h * 0.64 },
-          { x: w * 0.15, y: h * 0.71 },
-          { x: w * 0.30, y: h * 0.77 },
-          { x: w * 0.60, y: h * 0.83 },
-          { x: w * 0.75, y: h * 0.88 },
-          { x: w * 0.55, y: h * 0.95 },
+        // Hand-crafted smooth S-curves using manual cubic beziers for wide, rounded arcs
+        const p = [
+          [w * 0.80, h * 0.02],  // start top-right
+          [w * 0.15, h * 0.22],  // sweep to left
+          [w * 0.85, h * 0.46],  // sweep to right
+          [w * 0.15, h * 0.68],  // sweep to left
+          [w * 0.80, h * 0.85],  // sweep to right
+          [w * 0.45, h * 0.97],  // end center-ish
         ];
 
-        const d = catmullRomToBezier(points, 0.4);
+        // Build path with wide bezier control points that create big round turns
+        let d = `M ${p[0][0]} ${p[0][1]}`;
+        for (let i = 0; i < p.length - 1; i++) {
+          const [x1, y1] = p[i];
+          const [x2, y2] = p[i + 1];
+          const midY = (y1 + y2) / 2;
+          // Control points stay at the x of their anchor but at the midpoint y
+          // This creates wide, perfectly round U-turns
+          d += ` C ${x1} ${midY}, ${x2} ${midY}, ${x2} ${y2}`;
+        }
 
         svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
         svg.style.width = w + 'px';
