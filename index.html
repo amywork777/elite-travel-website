@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Elite Travel | Your Journey Begins Here</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --deep-ocean: #0a2540;
+      --azure: #1a7fb5;
+      --sky: #4db8d9;
+      --seafoam: #7dd3c0;
+      --pearl: #f0f7fa;
+      --sand: #faf6f1;
+      --white: #ffffff;
+      --gold: #c9a84c;
+      --text-dark: #0d1b2a;
+      --text-mid: #3d5a73;
+      --text-light: #7a9bb5;
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-body: 'Outfit', system-ui, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--text-dark);
+      background: var(--white);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ===== NAV ===== */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 1.25rem 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    nav.scrolled {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      padding: 0.75rem 3rem;
+      box-shadow: 0 1px 30px rgba(10, 37, 64, 0.06);
+    }
+
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 1.75rem;
+      font-weight: 300;
+      color: var(--white);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      transition: color 0.4s;
+    }
+
+    .nav-logo span {
+      font-weight: 600;
+      font-style: italic;
+    }
+
+    nav.scrolled .nav-logo { color: var(--deep-ocean); }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      font-weight: 400;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.85);
+      text-decoration: none;
+      position: relative;
+      padding-bottom: 4px;
+      transition: color 0.4s;
+    }
+
+    nav.scrolled .nav-links a { color: var(--text-mid); }
+    nav.scrolled .nav-links a:hover { color: var(--deep-ocean); }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: currentColor;
+      transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .nav-links a:hover::after { width: 100%; }
+    .nav-links a:hover { color: var(--white); }
+
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.5rem;
+    }
+
+    .nav-toggle span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--white);
+      margin: 5px 0;
+      transition: all 0.3s;
+    }
+
+    nav.scrolled .nav-toggle span { background: var(--deep-ocean); }
+
+    /* ===== LANG TOGGLE ===== */
+    .lang-toggle {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 30px;
+      padding: 3px;
+      margin-left: 1.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      transition: all 0.4s;
+    }
+
+    nav.scrolled .lang-toggle {
+      background: rgba(10, 37, 64, 0.06);
+      border-color: rgba(10, 37, 64, 0.1);
+    }
+
+    .lang-btn {
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      padding: 0.35rem 0.85rem;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+      background: transparent;
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    nav.scrolled .lang-btn { color: var(--text-light); }
+
+    .lang-btn.active {
+      background: var(--white);
+      color: var(--deep-ocean);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+    }
+
+    nav.scrolled .lang-btn.active {
+      background: var(--deep-ocean);
+      color: var(--white);
+    }
+
+    .lang-btn:hover:not(.active) { color: var(--white); }
+    nav.scrolled .lang-btn:hover:not(.active) { color: var(--deep-ocean); }
+
+    /* ===== HERO ===== */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: var(--deep-ocean);
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 120% 80% at 70% 20%, rgba(26, 127, 181, 0.5), transparent 60%),
+        radial-gradient(ellipse 100% 100% at 20% 80%, rgba(77, 184, 217, 0.3), transparent 50%),
+        radial-gradient(ellipse 80% 60% at 90% 70%, rgba(125, 211, 192, 0.2), transparent 50%),
+        linear-gradient(175deg, #061a2e 0%, #0a2540 30%, #0e3355 60%, #0a2540 100%);
+      animation: bgShift 20s ease-in-out infinite alternate;
+    }
+
+    @keyframes bgShift {
+      0% { opacity: 1; }
+      50% { opacity: 0.85; }
+      100% { opacity: 1; }
+    }
+
+    .hero-wave {
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 100%;
+      z-index: 2;
+    }
+
+    .hero-wave svg {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.15;
+      animation: float 15s ease-in-out infinite;
+    }
+
+    .orb-1 { width: 500px; height: 500px; background: var(--sky); top: -10%; right: -5%; animation-delay: -3s; }
+    .orb-2 { width: 350px; height: 350px; background: var(--seafoam); bottom: 20%; left: -5%; animation-delay: -8s; animation-duration: 18s; }
+    .orb-3 { width: 200px; height: 200px; background: var(--gold); top: 40%; right: 20%; opacity: 0.08; animation-delay: -5s; animation-duration: 12s; }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(30px, -20px) scale(1.05); }
+      66% { transform: translate(-20px, 15px) scale(0.95); }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 3;
+      text-align: center;
+      padding: 0 2rem;
+      max-width: 900px;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-weight: 400;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--seafoam);
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 1s 0.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 8vw, 6.5rem);
+      font-weight: 300;
+      line-height: 1.05;
+      color: var(--white);
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 1s 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      font-weight: 400;
+      color: var(--sky);
+    }
+
+    .hero-sub {
+      font-family: var(--font-body);
+      font-size: 1.05rem;
+      font-weight: 300;
+      color: rgba(255, 255, 255, 0.6);
+      line-height: 1.7;
+      max-width: 560px;
+      margin: 0 auto 2.5rem;
+      opacity: 0;
+      animation: fadeUp 1s 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--white);
+      text-decoration: none;
+      padding: 1rem 2.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 60px;
+      transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+      opacity: 0;
+      animation: fadeUp 1s 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    .hero-cta:hover {
+      background: var(--white);
+      color: var(--deep-ocean);
+      border-color: var(--white);
+      transform: translateY(-2px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    .hero-cta svg { transition: transform 0.4s; }
+    .hero-cta:hover svg { transform: translateX(4px); }
+
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+      margin-top: 4rem;
+      opacity: 0;
+      animation: fadeUp 1s 1.1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    .hero-stat {
+      text-align: center;
+    }
+
+    .hero-stat-number {
+      font-family: var(--font-display);
+      font-size: clamp(1.75rem, 3vw, 2.5rem);
+      font-weight: 400;
+      color: var(--white);
+      line-height: 1;
+    }
+
+    .hero-stat-number span {
+      color: var(--sky);
+    }
+
+    .hero-stat-label {
+      font-size: 0.7rem;
+      font-weight: 400;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.35);
+      margin-top: 0.5rem;
+    }
+
+    .hero-stat-divider {
+      width: 1px;
+      background: rgba(255, 255, 255, 0.1);
+      align-self: stretch;
+    }
+
+    .hero-phone {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      margin-top: 2rem;
+      opacity: 0;
+      animation: fadeUp 1s 1.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    .hero-phone a {
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      font-weight: 300;
+      color: rgba(255, 255, 255, 0.4);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      transition: color 0.3s;
+    }
+
+    .hero-phone a:hover { color: var(--sky); }
+
+    .hero-phone svg { color: rgba(255, 255, 255, 0.25); }
+
+    @media (max-width: 600px) {
+      .hero-stats { gap: 1.5rem; }
+      .hero-stat-number { font-size: 1.5rem; }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ===== SECTION SHARED ===== */
+    section { position: relative; }
+
+    .section-pad { padding: 7rem 3rem; }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .section-eyebrow {
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--azure);
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3.25rem);
+      font-weight: 400;
+      color: var(--deep-ocean);
+      line-height: 1.15;
+    }
+
+    .section-title em {
+      font-style: italic;
+      color: var(--azure);
+    }
+
+    .section-divider {
+      width: 50px;
+      height: 1px;
+      background: linear-gradient(90deg, var(--azure), var(--seafoam));
+      margin: 1.5rem auto 0;
+    }
+
+    /* ===== SERVICES ===== */
+    .services { background: var(--pearl); }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .service-card {
+      background: var(--white);
+      border-radius: 20px;
+      padding: 2.5rem 2rem;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+      cursor: default;
+    }
+
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--azure), var(--seafoam));
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+
+    .service-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 25px 60px rgba(10, 37, 64, 0.08);
+    }
+
+    .service-card:hover::before { opacity: 1; }
+
+    .service-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, var(--pearl), rgba(77, 184, 217, 0.1));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+      color: var(--azure);
+    }
+
+    .service-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: var(--deep-ocean);
+      margin-bottom: 0.75rem;
+    }
+
+    .service-card p {
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: var(--text-mid);
+      line-height: 1.7;
+    }
+
+    .service-card .service-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1.25rem;
+    }
+
+    .service-tag {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      padding: 0.3rem 0.75rem;
+      border-radius: 20px;
+      background: var(--pearl);
+      color: var(--azure);
+    }
+
+    /* ===== ABOUT ===== */
+    .about { background: var(--white); }
+
+    .about-content {
+      max-width: 680px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .about-text {
+      font-size: 1.05rem;
+      font-weight: 300;
+      color: var(--text-mid);
+      line-height: 1.9;
+      margin-bottom: 2.5rem;
+    }
+
+    .about-founder {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .about-founder-name {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-weight: 500;
+      color: var(--deep-ocean);
+    }
+
+    .about-founder-role {
+      font-size: 0.75rem;
+      font-weight: 400;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-light);
+    }
+
+    /* ===== CONTACT ===== */
+    .contact {
+      background: var(--deep-ocean);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact .orb { opacity: 0.08; }
+    .contact .section-eyebrow { color: var(--seafoam); }
+    .contact .section-title { color: var(--white); }
+    .contact .section-title em { color: var(--sky); }
+
+    .contact-grid {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .contact-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .contact-intro {
+      font-size: 1rem;
+      font-weight: 300;
+      color: rgba(255, 255, 255, 0.5);
+      line-height: 1.8;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1.25rem;
+    }
+
+    .contact-item-icon {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      background: rgba(77, 184, 217, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--sky);
+      flex-shrink: 0;
+    }
+
+    .contact-item-text h4 {
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-light);
+      margin-bottom: 0.35rem;
+    }
+
+    .contact-item-text p,
+    .contact-item-text a {
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--white);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .contact-item-text a:hover { color: var(--sky); }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: #061a2e;
+      padding: 2.5rem 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-logo {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 300;
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .footer-logo span { font-weight: 600; font-style: italic; }
+
+    .footer-copy {
+      font-size: 0.75rem;
+      font-weight: 300;
+      color: rgba(255, 255, 255, 0.25);
+    }
+
+    /* ===== FLIGHT PATH ===== */
+    .flight-path-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 50;
+    }
+
+    .flight-path-container svg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .flight-trail {
+      stroke: var(--sky);
+      stroke-width: 2;
+      stroke-dasharray: 2 12;
+      stroke-linecap: round;
+      fill: none;
+      opacity: 0.45;
+    }
+
+    .flight-trail-glow {
+      stroke: var(--sky);
+      stroke-width: 6;
+      stroke-dasharray: 2 12;
+      stroke-linecap: round;
+      fill: none;
+      opacity: 0.1;
+      filter: blur(2px);
+    }
+
+    .plane-icon {
+      position: fixed;
+      pointer-events: none;
+      z-index: 51;
+      filter: drop-shadow(0 4px 12px rgba(10, 37, 64, 0.35));
+      transition: opacity 0.3s;
+    }
+
+    @media (max-width: 900px) {
+      .flight-path-container, .plane-icon { display: none; }
+    }
+
+    /* ===== SCROLL ANIMATIONS ===== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
+      nav.scrolled { padding: 0.75rem 1.5rem; }
+      .nav-links { display: none; }
+      .nav-toggle { display: block; }
+
+      .nav-links.open {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0; right: 0;
+        background: rgba(10, 37, 64, 0.97);
+        backdrop-filter: blur(20px);
+        padding: 2rem;
+        gap: 1.5rem;
+      }
+
+      nav.scrolled .nav-links.open a { color: var(--white); }
+
+      .section-pad { padding: 4rem 1.5rem; }
+
+      .services-grid {
+        grid-template-columns: 1fr;
+        max-width: 500px;
+      }
+
+      footer {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+        padding: 2rem 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="nav">
+    <a href="#" class="nav-logo"><span>Elite</span> Travel</a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#services" data-en="Services" data-cn="服务项目">Services</a></li>
+      <li><a href="#about" data-en="About" data-cn="关于我们">About</a></li>
+      <li><a href="#contact" data-en="Contact" data-cn="联系我们">Contact</a></li>
+    </ul>
+    <div style="display:flex;align-items:center;">
+      <div class="lang-toggle" id="langToggle">
+        <button class="lang-btn active" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="cn">中文</button>
+      </div>
+      <button class="nav-toggle" id="navToggle" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow" data-en="California-Based Travel Agency" data-cn="加州旅行社">California-Based Travel Agency</p>
+      <h1 data-en-html="<em>Elite</em> Travel" data-cn-html="<em>精英</em>旅行"><em>Elite</em> Travel</h1>
+      <p class="hero-sub" data-en="Tour packages, visa services, and airport transportation — all in one place." data-cn="旅游套餐、签证服务、机场接送——一站式搞定。">Tour packages, visa services, and airport transportation — all in one place.</p>
+      <a href="#contact" class="hero-cta" data-en="Contact Us" data-cn="联系我们">
+        Contact Us
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </a>
+
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="hero-stat-number">750<span>+</span></div>
+          <div class="hero-stat-label" data-en="Tour Packages" data-cn="旅游套餐">Tour Packages</div>
+        </div>
+        <div class="hero-stat-divider"></div>
+        <div class="hero-stat">
+          <div class="hero-stat-number">40<span>+</span></div>
+          <div class="hero-stat-label" data-en="Destinations" data-cn="目的地">Destinations</div>
+        </div>
+      </div>
+
+      <div class="hero-phone">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        <a href="tel:+14084993318">+1 (408) 499-3318</a>
+      </div>
+    </div>
+    <div class="hero-wave">
+      <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+        <path d="M0 60C240 120 480 0 720 60C960 120 1200 0 1440 60V120H0V60Z" fill="#f0f7fa"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="services section-pad" id="services">
+    <div class="section-header reveal">
+      <p class="section-eyebrow" data-en="Our Services" data-cn="我们的服务">Our Services</p>
+      <h2 class="section-title" data-en-html="What We <em>Offer</em>" data-cn-html="我们的<em>服务</em>">What We <em>Offer</em></h2>
+      <div class="section-divider"></div>
+    </div>
+    <div class="services-grid">
+
+      <div class="service-card reveal reveal-delay-1">
+        <div class="service-icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        </div>
+        <h3 data-en="Travel Packages" data-cn="旅游套餐">Travel Packages</h3>
+        <p data-en="Group and private tours worldwide — flights, hotels, and guided experiences included." data-cn="全球团体和私人旅游——涵盖机票、酒店和导游体验。">Group and private tours worldwide — flights, hotels, and guided experiences included.</p>
+        <div class="service-tags">
+          <span class="service-tag" data-en="USA &amp; Canada" data-cn="美国和加拿大">USA &amp; Canada</span>
+          <span class="service-tag" data-en="Asia" data-cn="亚洲">Asia</span>
+          <span class="service-tag" data-en="Europe" data-cn="欧洲">Europe</span>
+          <span class="service-tag" data-en="South America" data-cn="南美洲">South America</span>
+        </div>
+      </div>
+
+      <div class="service-card reveal reveal-delay-2">
+        <div class="service-icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 10h20"/><circle cx="12" cy="15" r="2"/><path d="M6 15h.01"/><path d="M18 15h.01"/></svg>
+        </div>
+        <h3 data-en="Visa Services" data-cn="签证服务">Visa Services</h3>
+        <p data-en="Full application assistance — document prep, submission, and follow-up." data-cn="全程申请协助——材料准备、提交和后续跟进。">Full application assistance — document prep, submission, and follow-up.</p>
+        <div class="service-tags">
+          <span class="service-tag" data-en="China" data-cn="中国">China</span>
+          <span class="service-tag" data-en="Japan" data-cn="日本">Japan</span>
+          <span class="service-tag" data-en="Europe / Schengen" data-cn="欧洲/申根">Europe / Schengen</span>
+        </div>
+      </div>
+
+      <div class="service-card reveal reveal-delay-3">
+        <div class="service-icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17h2m10 0h2"/><path d="M9 17H7V6a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v11h-2"/><rect x="9" y="17" width="6" height="2" rx="1"/><circle cx="7" cy="11" r="1"/><circle cx="17" cy="11" r="1"/><path d="M5 11h14"/><path d="M3 17h18"/></svg>
+        </div>
+        <h3 data-en="Airport Transfers" data-cn="机场接送">Airport Transfers</h3>
+        <p data-en="Comfortable, on-time pickup and drop-off to and from the airport." data-cn="舒适准时的机场接送服务。">Comfortable, on-time pickup and drop-off to and from the airport.</p>
+        <div class="service-tags">
+          <span class="service-tag" data-en="Pickup" data-cn="接机">Pickup</span>
+          <span class="service-tag" data-en="Drop-off" data-cn="送机">Drop-off</span>
+          <span class="service-tag" data-en="Private Car" data-cn="专车">Private Car</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about section-pad" id="about">
+    <div class="section-header reveal">
+      <p class="section-eyebrow" data-en="Our Story" data-cn="我们的故事">Our Story</p>
+      <h2 class="section-title" data-en-html="Passion for Travel,<br><em>Personalized</em> for You" data-cn-html="热爱旅行，<br>为您<em>量身定制</em>">Passion for Travel,<br><em>Personalized</em> for You</h2>
+      <div class="section-divider"></div>
+    </div>
+    <div class="about-content">
+      <p class="about-text reveal" data-en="At Elite Travel, we believe every journey should be extraordinary. Based in California, we specialize in crafting bespoke travel experiences that go beyond the ordinary. Whether you're seeking a serene beach escape, a cultural expedition, or an adventurous getaway, we bring expertise, care, and attention to every detail." data-cn="在精英旅行，我们相信每一次旅程都应该是非凡的。我们立足加州，专注于打造超越平凡的定制旅行体验。无论您是寻求宁静的海滨度假、文化探索之旅，还是冒险之旅，我们都以专业、用心和对每个细节的关注为您服务。">At Elite Travel, we believe every journey should be extraordinary. Based in California, we specialize in crafting bespoke travel experiences that go beyond the ordinary. Whether you're seeking a serene beach escape, a cultural expedition, or an adventurous getaway, we bring expertise, care, and attention to every detail.</p>
+      <div class="about-founder reveal">
+        <span class="about-founder-name">Annie Qi</span>
+        <span class="about-founder-role" data-en="Founder &amp; Owner" data-cn="创始人">Founder &amp; Owner</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact section-pad" id="contact">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="section-header reveal">
+      <p class="section-eyebrow" data-en="Get in Touch" data-cn="联系我们">Get in Touch</p>
+      <h2 class="section-title" data-en-html="<em>Contact</em> Us" data-cn-html="<em>联系</em>我们"><em>Contact</em> Us</h2>
+      <div class="section-divider"></div>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-info">
+
+        <div class="contact-item reveal reveal-delay-1">
+          <div class="contact-item-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          </div>
+          <div class="contact-item-text">
+            <h4 data-en="Phone" data-cn="电话">Phone</h4>
+            <a href="tel:+14084993318">+1 (408) 499-3318</a>
+          </div>
+        </div>
+
+        <div class="contact-item reveal reveal-delay-2">
+          <div class="contact-item-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+          </div>
+          <div class="contact-item-text">
+            <h4 data-en="Email" data-cn="邮箱">Email</h4>
+            <a href="mailto:elitetravelusa@gmail.com">elitetravelusa@gmail.com</a>
+          </div>
+        </div>
+
+        <div class="contact-item reveal reveal-delay-3">
+          <div class="contact-item-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <div class="contact-item-text">
+            <h4 data-en="WeChat / LINE" data-cn="微信 / LINE">WeChat / LINE</h4>
+            <p data-en-html="WeChat: annie7usa &nbsp;&bull;&nbsp; LINE: yan7usa" data-cn-html="微信: annie7usa &nbsp;&bull;&nbsp; LINE: yan7usa">WeChat: annie7usa &nbsp;&bull;&nbsp; LINE: yan7usa</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FLIGHT PATH -->
+  <div class="flight-path-container" id="flightPathContainer">
+    <svg id="flightPathSvg" preserveAspectRatio="none">
+      <path class="flight-trail-glow" id="trailGlow" />
+      <path class="flight-trail" id="trail" />
+    </svg>
+  </div>
+  <svg class="plane-icon" id="planeIcon" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 256 256">
+    <path d="M185.33,114.21l29.14-27.42.17-.17a32,32,0,0,0-45.26-45.26c0,.06-.11.11-.17.17L141.79,70.67l-83-30.2a8,8,0,0,0-8.39,1.86l-24,24a8,8,0,0,0,1.22,12.31l63.89,42.59L76.69,136H56a8,8,0,0,0-5.65,2.34l-24,24A8,8,0,0,0,29,175.42l36.82,14.73,14.7,36.75.06.16a8,8,0,0,0,13.18,2.47l23.87-23.88A8,8,0,0,0,120,200V179.31l14.76-14.76,42.59,63.89a8,8,0,0,0,12.31,1.22l24-24a8,8,0,0,0,1.86-8.39Zm-.07,97.23-42.59-63.88A8,8,0,0,0,136.8,144c-.27,0-.53,0-.79,0a8,8,0,0,0-5.66,2.35l-24,24A8,8,0,0,0,104,176v20.69L90.93,209.76,79.43,181A8,8,0,0,0,75,176.57l-28.74-11.5L59.32,152H80a8,8,0,0,0,5.66-2.34l24-24a8,8,0,0,0-1.22-12.32L44.56,70.74l13.5-13.49,83.22,30.26a8,8,0,0,0,8.56-2L180.78,52.6A16,16,0,0,1,203.4,75.23l-32.87,30.93a8,8,0,0,0-2,8.56l30.26,83.22Z" fill="var(--sky)"/>
+  </svg>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo"><span>Elite</span> Travel</div>
+    <p class="footer-copy" data-en="&copy; 2026 Elite Travel. All rights reserved." data-cn="&copy; 2026 精英旅行。保留所有权利。">&copy; 2026 Elite Travel. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Nav scroll effect
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    // Mobile menu toggle
+    const navToggle = document.getElementById('navToggle');
+    const navLinks = document.getElementById('navLinks');
+    navToggle.addEventListener('click', () => {
+      navLinks.classList.toggle('open');
+    });
+
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => navLinks.classList.remove('open'));
+    });
+
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+    reveals.forEach(el => observer.observe(el));
+
+    // Language toggle
+    let currentLang = localStorage.getItem('eliteLang') || 'en';
+    const langBtns = document.querySelectorAll('.lang-btn');
+
+    function setLanguage(lang) {
+      currentLang = lang;
+      localStorage.setItem('eliteLang', lang);
+
+      langBtns.forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.lang === lang);
+      });
+
+      document.title = lang === 'cn'
+        ? '精英旅行 | 您的旅程从这里开始'
+        : 'Elite Travel | Your Journey Begins Here';
+
+      // Plain text elements
+      document.querySelectorAll('[data-en]').forEach(el => {
+        const text = el.getAttribute('data-' + lang);
+        if (text) {
+          const svg = el.querySelector('svg');
+          if (svg) {
+            el.childNodes.forEach(node => {
+              if (node.nodeType === 3) node.textContent = '';
+            });
+            el.insertBefore(document.createTextNode(text + ' '), svg);
+            const nodes = Array.from(el.childNodes);
+            let foundText = false;
+            nodes.forEach(node => {
+              if (node.nodeType === 3 && node.textContent.trim()) {
+                if (foundText) node.remove();
+                foundText = true;
+              }
+            });
+          } else {
+            el.textContent = text;
+          }
+        }
+      });
+
+      // HTML elements
+      document.querySelectorAll('[data-en-html]').forEach(el => {
+        const html = el.getAttribute('data-' + lang + '-html');
+        if (html) el.innerHTML = html;
+      });
+
+    }
+
+    langBtns.forEach(btn => {
+      btn.addEventListener('click', () => setLanguage(btn.dataset.lang));
+    });
+
+    if (currentLang !== 'en') {
+      setLanguage(currentLang);
+    }
+
+    // Flight path animation
+    (function() {
+      const svg = document.getElementById('flightPathSvg');
+      const trail = document.getElementById('trail');
+      const trailGlow = document.getElementById('trailGlow');
+      const plane = document.getElementById('planeIcon');
+      const container = document.getElementById('flightPathContainer');
+      // Hidden full-length path for position tracking
+      let measurePath = null;
+
+      if (window.innerWidth <= 900) return;
+
+      let pathLength = 0;
+
+      // Catmull-Rom to cubic bezier conversion for ultra-smooth curves
+      function catmullRomToBezier(points, tension) {
+        tension = tension || 0.3;
+        let d = `M ${points[0].x} ${points[0].y}`;
+        for (let i = 0; i < points.length - 1; i++) {
+          const p0 = points[Math.max(i - 1, 0)];
+          const p1 = points[i];
+          const p2 = points[i + 1];
+          const p3 = points[Math.min(i + 2, points.length - 1)];
+
+          const cp1x = p1.x + (p2.x - p0.x) * tension;
+          const cp1y = p1.y + (p2.y - p0.y) * tension;
+          const cp2x = p2.x - (p3.x - p1.x) * tension;
+          const cp2y = p2.y - (p3.y - p1.y) * tension;
+
+          d += ` C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${p2.x} ${p2.y}`;
+        }
+        return d;
+      }
+
+      function buildPath() {
+        const docH = document.documentElement.scrollHeight;
+        const w = window.innerWidth;
+        const h = docH;
+
+        // Wide, gentle S-curves with extra waypoints at turns for big rounded arcs
+        const points = [
+          { x: w * 0.82, y: h * 0.02 },
+          { x: w * 0.60, y: h * 0.08 },
+          { x: w * 0.30, y: h * 0.14 },
+          { x: w * 0.15, y: h * 0.20 },
+          { x: w * 0.18, y: h * 0.27 },
+          { x: w * 0.35, y: h * 0.32 },
+          { x: w * 0.65, y: h * 0.37 },
+          { x: w * 0.82, y: h * 0.42 },
+          { x: w * 0.85, y: h * 0.48 },
+          { x: w * 0.70, y: h * 0.54 },
+          { x: w * 0.40, y: h * 0.59 },
+          { x: w * 0.18, y: h * 0.64 },
+          { x: w * 0.15, y: h * 0.71 },
+          { x: w * 0.30, y: h * 0.77 },
+          { x: w * 0.60, y: h * 0.83 },
+          { x: w * 0.75, y: h * 0.88 },
+          { x: w * 0.55, y: h * 0.95 },
+        ];
+
+        const d = catmullRomToBezier(points, 0.4);
+
+        svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
+        svg.style.width = w + 'px';
+        svg.style.height = h + 'px';
+        container.style.position = 'absolute';
+        container.style.height = h + 'px';
+
+        trail.setAttribute('d', d);
+        trailGlow.setAttribute('d', d);
+
+        // Create a hidden solid path for measuring positions
+        if (measurePath) measurePath.remove();
+        measurePath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        measurePath.setAttribute('d', d);
+        measurePath.style.visibility = 'hidden';
+        measurePath.style.pointerEvents = 'none';
+        measurePath.setAttribute('fill', 'none');
+        measurePath.setAttribute('stroke', 'none');
+        svg.appendChild(measurePath);
+
+        pathLength = measurePath.getTotalLength();
+
+        // Use a clip-rect approach to reveal dotted trail progressively
+        // Create a clipPath if it doesn't exist
+        let defs = svg.querySelector('defs');
+        if (!defs) {
+          defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+          svg.prepend(defs);
+        }
+        let clipPath = defs.querySelector('#trailClip');
+        if (!clipPath) {
+          clipPath = document.createElementNS('http://www.w3.org/2000/svg', 'clipPath');
+          clipPath.id = 'trailClip';
+          const clipRect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+          clipRect.id = 'trailClipRect';
+          clipRect.setAttribute('x', '0');
+          clipRect.setAttribute('y', '0');
+          clipRect.setAttribute('width', w);
+          clipRect.setAttribute('height', '0');
+          clipPath.appendChild(clipRect);
+          defs.appendChild(clipPath);
+          trail.setAttribute('clip-path', 'url(#trailClip)');
+          trailGlow.setAttribute('clip-path', 'url(#trailClip)');
+        }
+        const clipRect = defs.querySelector('#trailClipRect');
+        clipRect.setAttribute('width', w);
+      }
+
+      function updatePlane() {
+        if (!pathLength || !measurePath) return;
+
+        const scrollY = window.scrollY;
+        const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = Math.min(scrollY / maxScroll, 1);
+
+        // Reveal trail by expanding clip rect height
+        const point = measurePath.getPointAtLength(pathLength * progress);
+
+        // Set clip rect to reveal everything above the plane's current Y + some padding
+        const clipRect = svg.querySelector('#trailClipRect');
+        if (clipRect) {
+          clipRect.setAttribute('height', point.y + 40);
+        }
+
+        // Get a point slightly ahead for rotation
+        const aheadLen = Math.min(pathLength * progress + 15, pathLength);
+        const ahead = measurePath.getPointAtLength(aheadLen);
+
+        const angle = Math.atan2(ahead.y - point.y, ahead.x - point.x) * (180 / Math.PI);
+
+        // Convert SVG coords to screen coords
+        const rect = svg.getBoundingClientRect();
+        const vb = svg.getAttribute('viewBox').split(' ');
+        const scaleX = rect.width / parseFloat(vb[2]);
+        const scaleY = rect.height / parseFloat(vb[3]);
+
+        const screenX = rect.left + point.x * scaleX;
+        const screenY = rect.top + point.y * scaleY;
+
+        plane.style.left = (screenX - 16) + 'px';
+        plane.style.top = (screenY - 16) + 'px';
+        plane.style.transform = `rotate(${angle + 45}deg)`;
+        plane.style.opacity = progress < 0.005 ? '0' : '1';
+      }
+
+      buildPath();
+      updatePlane();
+
+      window.addEventListener('scroll', updatePlane, { passive: true });
+      window.addEventListener('resize', () => {
+        if (window.innerWidth <= 900) {
+          container.style.display = 'none';
+          plane.style.display = 'none';
+          return;
+        }
+        container.style.display = '';
+        plane.style.display = '';
+        buildPath();
+        updatePlane();
+      });
+    })();
+  </script>
+
+</body>
+</html>
