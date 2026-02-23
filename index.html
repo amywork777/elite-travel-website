@@ -442,6 +442,14 @@
       margin: 0 auto;
     }
 
+    .services-grid-row2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+      max-width: 730px;
+      margin: 2rem auto 0;
+    }
+
     .service-card {
       background: var(--white);
       border-radius: 20px;
@@ -512,6 +520,331 @@
       background: var(--pearl);
       color: var(--azure);
     }
+
+    /* ===== OFFERINGS ===== */
+    .offerings { background: var(--white); }
+
+    .offering-card {
+      max-width: 900px;
+      margin: 0 auto;
+      background: linear-gradient(135deg, #fff5f5 0%, #fff0f7 50%, #fef5ff 100%);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(10, 37, 64, 0.06);
+      position: relative;
+    }
+
+    .offering-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #f4a0b5, #e87da0, #d4649a);
+    }
+
+    .offering-header {
+      padding: 2.5rem 2.5rem 1.5rem;
+      text-align: center;
+    }
+
+    .offering-badge {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.4rem 1rem;
+      border-radius: 20px;
+      background: linear-gradient(135deg, #e87da0, #d4649a);
+      color: var(--white);
+      margin-bottom: 1rem;
+    }
+
+    .offering-header h3 {
+      font-family: var(--font-display);
+      font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+      font-weight: 400;
+      color: var(--deep-ocean);
+      line-height: 1.2;
+      margin-bottom: 0.5rem;
+    }
+
+    .offering-header h3 em {
+      font-style: italic;
+      color: #d4649a;
+    }
+
+    .offering-subtitle {
+      font-size: 0.95rem;
+      font-weight: 300;
+      color: var(--text-mid);
+      line-height: 1.6;
+    }
+
+    .offering-highlights {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      padding: 0 2.5rem;
+    }
+
+    .offering-stat {
+      text-align: center;
+      padding: 1.25rem 0.75rem;
+      border-right: 1px solid rgba(212, 100, 154, 0.1);
+    }
+
+    .offering-stat:last-child { border-right: none; }
+
+    .offering-stat-number {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 500;
+      color: #d4649a;
+      line-height: 1;
+    }
+
+    .offering-stat-label {
+      font-size: 0.72rem;
+      font-weight: 400;
+      color: var(--text-mid);
+      margin-top: 0.35rem;
+      line-height: 1.4;
+    }
+
+    .offering-details {
+      padding: 1.5rem 2.5rem;
+    }
+
+    .offering-features {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.6rem 2rem;
+      list-style: none;
+    }
+
+    .offering-features li {
+      font-size: 0.85rem;
+      font-weight: 300;
+      color: var(--text-mid);
+      padding-left: 1.25rem;
+      position: relative;
+      line-height: 1.6;
+    }
+
+    .offering-features li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.55rem;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #e87da0;
+    }
+
+    .offering-footer {
+      padding: 1.5rem 2.5rem 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .offering-price {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .offering-price-original {
+      font-size: 0.8rem;
+      font-weight: 400;
+      color: var(--text-light);
+      text-decoration: line-through;
+    }
+
+    .offering-price-current {
+      font-family: var(--font-display);
+      font-size: 2.25rem;
+      font-weight: 500;
+      color: #d4649a;
+      line-height: 1.1;
+    }
+
+    .offering-price-note {
+      font-size: 0.72rem;
+      font-weight: 400;
+      color: var(--text-mid);
+      margin-top: 0.2rem;
+    }
+
+    .offering-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--white);
+      text-decoration: none;
+      padding: 0.9rem 2rem;
+      border: none;
+      border-radius: 50px;
+      background: linear-gradient(135deg, #e87da0, #d4649a);
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .offering-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(212, 100, 154, 0.3);
+    }
+
+    .offering-cta svg { transition: transform 0.3s; }
+    .offering-cta:hover svg { transform: translateX(3px); }
+
+    .offering-dates {
+      text-align: center;
+      padding: 0 2.5rem 0.5rem;
+      font-size: 0.78rem;
+      font-weight: 400;
+      color: var(--text-light);
+    }
+
+    @media (max-width: 700px) {
+      .offering-highlights { grid-template-columns: repeat(2, 1fr); }
+      .offering-stat { border-bottom: 1px solid rgba(212, 100, 154, 0.1); }
+      .offering-stat:nth-child(2) { border-right: none; }
+      .offering-features { grid-template-columns: 1fr; }
+      .offering-footer { flex-direction: column; text-align: center; align-items: center; }
+      .offering-header, .offering-details, .offering-footer { padding-left: 1.5rem; padding-right: 1.5rem; }
+      .offering-highlights { padding: 0 1.5rem; }
+    }
+
+    /* ===== OFFERING CARD BLUE VARIANT ===== */
+    .offering-card.blue {
+      background: linear-gradient(135deg, #f0f4fa 0%, #e8f0fb 50%, #f0f7fa 100%);
+    }
+
+    .offering-card.blue::before {
+      background: linear-gradient(90deg, var(--sky), var(--azure));
+    }
+
+    .offering-card.blue .offering-badge {
+      background: linear-gradient(135deg, var(--sky), var(--azure));
+    }
+
+    .offering-card.blue .offering-header h3 em {
+      color: var(--azure);
+    }
+
+    .offering-card.blue .offering-stat-number {
+      color: var(--azure);
+    }
+
+    .offering-card.blue .offering-stat {
+      border-right-color: rgba(26, 127, 181, 0.1);
+    }
+
+    .offering-card.blue .offering-features li::before {
+      background: var(--azure);
+    }
+
+    .offering-card.blue .offering-price-current {
+      color: var(--azure);
+    }
+
+    .offering-card.blue .offering-cta {
+      background: linear-gradient(135deg, var(--sky), var(--azure));
+    }
+
+    .offering-card.blue .offering-cta:hover {
+      box-shadow: 0 12px 30px rgba(26, 127, 181, 0.3);
+    }
+
+    .offerings-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 3rem;
+    }
+
+    /* ===== QR MODAL ===== */
+    .qr-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+      background: rgba(10, 37, 64, 0.6);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    .qr-modal-card {
+      background: var(--white);
+      border-radius: 20px;
+      padding: 2.5rem 2rem;
+      max-width: 360px;
+      width: 90%;
+      text-align: center;
+      position: relative;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.25);
+      animation: fadeUp 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .qr-modal-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--text-light);
+      padding: 0.25rem;
+      transition: color 0.3s;
+    }
+
+    .qr-modal-close:hover { color: var(--deep-ocean); }
+
+    .qr-modal-card h4 {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: var(--deep-ocean);
+      margin-bottom: 0.35rem;
+    }
+
+    .qr-modal-card p {
+      font-size: 0.85rem;
+      font-weight: 300;
+      color: var(--text-mid);
+      margin-bottom: 1.25rem;
+    }
+
+    .qr-modal-card img {
+      width: 240px;
+      height: 240px;
+      object-fit: contain;
+      border-radius: 12px;
+      margin-bottom: 1rem;
+    }
+
+    .qr-modal-phone {
+      font-size: 0.8rem;
+      font-weight: 400;
+      color: var(--text-light);
+    }
+
+    .qr-modal-phone a {
+      color: var(--azure);
+      text-decoration: none;
+    }
+
+    .qr-modal-phone a:hover { text-decoration: underline; }
 
     /* ===== ABOUT ===== */
     .about { background: var(--white); }
@@ -746,6 +1079,11 @@
         max-width: 500px;
       }
 
+      .services-grid-row2 {
+        grid-template-columns: 1fr;
+        max-width: 500px;
+      }
+
       footer {
         flex-direction: column;
         gap: 1rem;
@@ -762,6 +1100,7 @@
     <a href="#" class="nav-logo"><span>Elite</span> Travel</a>
     <ul class="nav-links" id="navLinks">
       <li><a href="#services" data-en="Services" data-cn="服务项目">Services</a></li>
+      <li><a href="#offerings" data-en="Offerings" data-cn="精选行程">Offerings</a></li>
       <li><a href="#about" data-en="About" data-cn="关于我们">About</a></li>
       <li><a href="#contact" data-en="Contact" data-cn="联系我们">Contact</a></li>
     </ul>
@@ -784,7 +1123,7 @@
     <div class="orb orb-3"></div>
     <div class="hero-content">
       <p class="hero-eyebrow" data-en="California-Based Travel Agency" data-cn="加州旅行社">California-Based Travel Agency</p>
-      <h1 data-en-html="<em>Elite</em> Travel" data-cn-html="<em>精英</em>旅行"><em>Elite</em> Travel</h1>
+      <h1 data-en-html="<em>Elite</em> Travel" data-cn-html="<em>佳音</em>旅行"><em>Elite</em> Travel</h1>
       <p class="hero-sub" data-en="Tour packages, visa services, and airport transportation — all in one place." data-cn="旅游套餐、签证服务、机场接送——一站式搞定。">Tour packages, visa services, and airport transportation — all in one place.</p>
       <a href="#contact" class="hero-cta" data-en="Contact Us" data-cn="联系我们">
         Contact Us
@@ -865,6 +1204,151 @@
       </div>
 
     </div>
+    <div class="services-grid-row2">
+
+      <div class="service-card reveal reveal-delay-4">
+        <div class="service-icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h20"/><path d="M4 20V10l8-6 8 6v10"/><path d="M2 17h2l3-7h10l3 7h2"/><circle cx="7" cy="17" r="1"/><circle cx="17" cy="17" r="1"/></svg>
+        </div>
+        <h3 data-en="Cruises" data-cn="邮轮旅游">Cruises</h3>
+        <p data-en="Luxury ocean and river cruises to breathtaking destinations worldwide — all-inclusive packages with world-class dining and entertainment." data-cn="豪华海洋及河流邮轮之旅，前往世界各地的绝美目的地——全包套餐，享受世界级餐饮和娱乐。">Luxury ocean and river cruises to breathtaking destinations worldwide — all-inclusive packages with world-class dining and entertainment.</p>
+        <div class="service-tags">
+          <span class="service-tag" data-en="Ocean" data-cn="海洋邮轮">Ocean</span>
+          <span class="service-tag" data-en="River" data-cn="河流邮轮">River</span>
+          <span class="service-tag" data-en="All-Inclusive" data-cn="全包">All-Inclusive</span>
+        </div>
+      </div>
+
+      <div class="service-card reveal reveal-delay-5">
+        <div class="service-icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 1 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        </div>
+        <h3 data-en="Itinerary Planning" data-cn="行程规划">Itinerary Planning</h3>
+        <p data-en="Custom-built travel itineraries tailored to your interests, budget, and schedule — we handle every detail so you can focus on the experience." data-cn="根据您的兴趣、预算和时间量身定制旅行行程——我们处理每一个细节，让您专注享受旅途。">Custom-built travel itineraries tailored to your interests, budget, and schedule — we handle every detail so you can focus on the experience.</p>
+        <div class="service-tags">
+          <span class="service-tag" data-en="Custom" data-cn="定制">Custom</span>
+          <span class="service-tag" data-en="Group" data-cn="团体">Group</span>
+          <span class="service-tag" data-en="Private" data-cn="私人">Private</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- OFFERINGS -->
+  <section class="offerings section-pad" id="offerings">
+    <div class="section-header reveal">
+      <p class="section-eyebrow" data-en="Featured Tour" data-cn="精选行程">Featured Tour</p>
+      <h2 class="section-title" data-en-html="2026 <em>Offerings</em>" data-cn-html="2026 <em>精选行程</em>">2026 <em>Offerings</em></h2>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="offerings-grid">
+
+    <div class="offering-card reveal">
+      <div class="offering-header">
+        <span class="offering-badge" data-en="Early Bird Special" data-cn="早鸟优惠">Early Bird Special</span>
+        <h3 data-en-html="Japan <em>Cherry Blossom</em> Viewing Tour" data-cn-html="日本<em>樱花</em>赏花之旅">Japan <em>Cherry Blossom</em> Viewing Tour</h3>
+        <p class="offering-subtitle" data-en="A premium 8-day journey through Japan's most stunning cherry blossom spots — from Mount Fuji and Hakone hot springs to Kyoto temples and Nara's deer parks." data-cn="8天7夜日本顶级赏樱之旅——从富士山到箱根温泉，从京都寺庙到奈良小鹿，沉浸式体验日本春日之美。">A premium 8-day journey through Japan's most stunning cherry blossom spots — from Mount Fuji and Hakone hot springs to Kyoto temples and Nara's deer parks.</p>
+      </div>
+
+      <div class="offering-highlights">
+        <div class="offering-stat">
+          <div class="offering-stat-number">8</div>
+          <div class="offering-stat-label" data-en="Days &amp; 7 Nights" data-cn="天7夜">Days &amp; 7 Nights</div>
+        </div>
+        <div class="offering-stat">
+          <div class="offering-stat-number">7</div>
+          <div class="offering-stat-label" data-en="Cities Visited" data-cn="座城市">Cities Visited</div>
+        </div>
+        <div class="offering-stat">
+          <div class="offering-stat-number">6</div>
+          <div class="offering-stat-label" data-en="Blossom Viewing Spots" data-cn="大赏樱景点">Blossom Viewing Spots</div>
+        </div>
+        <div class="offering-stat">
+          <div class="offering-stat-number">4-5</div>
+          <div class="offering-stat-label" data-en="Star Hotels" data-cn="星级酒店">Star Hotels</div>
+        </div>
+      </div>
+
+      <div class="offering-details">
+        <ul class="offering-features">
+          <li data-en="Tokyo, Yokohama, Kamakura, Hakone, Kyoto, Nara &amp; Osaka" data-cn="东京、横滨、�的仓、箱根、京都、奈良、大阪">Tokyo, Yokohama, Kamakura, Hakone, Kyoto, Nara &amp; Osaka</li>
+          <li data-en="Night cherry blossoms at Ueno Park, Mount Fuji sakura, Arashiyama train" data-cn="上野公园夜樱、富士山樱花、岚山观樱小火车">Night cherry blossoms at Ueno Park, Mount Fuji sakura, Arashiyama train</li>
+          <li data-en="Hakone hot springs &amp; Lake Ashi pirate ship cruise" data-cn="箱根温泉 &amp; 芦之湖海盗船游览">Hakone hot springs &amp; Lake Ashi pirate ship cruise</li>
+          <li data-en="Pufferfish cuisine, samurai hot pot &amp; onsen dinner" data-cn="河豚特色餐、武将锅 &amp; 温泉晚餐">Pufferfish cuisine, samurai hot pot &amp; onsen dinner</li>
+          <li data-en="Two-day in-depth Kyoto tour with exclusive cultural sites" data-cn="京都两日深度游，探索独家文化景点">Two-day in-depth Kyoto tour with exclusive cultural sites</li>
+          <li data-en="All-inclusive — no shopping stops, pure sightseeing" data-cn="全包价，无购物，纯观光旅游">All-inclusive — no shopping stops, pure sightseeing</li>
+        </ul>
+      </div>
+
+      <p class="offering-dates" data-en="March 29 – April 5, 2026 &nbsp;|&nbsp; Early bird discount ends January 31" data-cn="2026年3月29日 – 4月5日 &nbsp;|&nbsp; 早鸟优惠截止1月31日">March 29 – April 5, 2026 &nbsp;|&nbsp; Early bird discount ends January 31</p>
+
+      <div class="offering-footer">
+        <div class="offering-price">
+          <span class="offering-price-original" data-en="$2,999 / person" data-cn="$2,999 / 人">$2,999 / person</span>
+          <span class="offering-price-current">$2,199<span style="font-size:0.5em;font-family:var(--font-body);font-weight:400;color:var(--text-mid);"> / person</span></span>
+          <span class="offering-price-note" data-en="Save $800 per person &nbsp;·&nbsp; Single occupancy: $2,699" data-cn="每人立减$800 &nbsp;·&nbsp; 单人入住：$2,699">Save $800 per person &nbsp;·&nbsp; Single occupancy: $2,699</span>
+        </div>
+        <button onclick="document.getElementById('qrModal').style.display='flex'" class="offering-cta" data-en="Book Now" data-cn="立即预订">
+          Book Now
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="offering-card blue reveal">
+      <div class="offering-header">
+        <span class="offering-badge" data-en="Cruise Special" data-cn="邮轮特惠">Cruise Special</span>
+        <h3 data-en-html="Athens &amp; <em>Eastern Mediterranean</em> Cruise" data-cn-html="希腊<em>爱琴海</em>邮轮之旅">Athens &amp; <em>Eastern Mediterranean</em> Cruise</h3>
+        <p class="offering-subtitle" data-en="9 days and 8 nights aboard the Celebrity Infinity — sail the romantic Aegean islands including Santorini, Mykonos, Rhodes, and more." data-cn="乘坐名人无极号邮轮，9天8夜畅游浪漫爱琴海群岛——圣托里尼、米科诺斯、罗得岛等绝美目的地。">9 days and 8 nights aboard the Celebrity Infinity — sail the romantic Aegean islands including Santorini, Mykonos, Rhodes, and more.</p>
+      </div>
+
+      <div class="offering-highlights">
+        <div class="offering-stat">
+          <div class="offering-stat-number">9</div>
+          <div class="offering-stat-label" data-en="Days &amp; 8 Nights" data-cn="天8夜">Days &amp; 8 Nights</div>
+        </div>
+        <div class="offering-stat">
+          <div class="offering-stat-number">6</div>
+          <div class="offering-stat-label" data-en="Ports of Call" data-cn="停靠港口">Ports of Call</div>
+        </div>
+        <div class="offering-stat">
+          <div class="offering-stat-number">90K</div>
+          <div class="offering-stat-label" data-en="Ton Luxury Ship" data-cn="吨豪华邮轮">Ton Luxury Ship</div>
+        </div>
+        <div class="offering-stat">
+          <div class="offering-stat-number">5</div>
+          <div class="offering-stat-label" data-en="Greek Islands" data-cn="座希腊岛屿">Greek Islands</div>
+        </div>
+      </div>
+
+      <div class="offering-details">
+        <ul class="offering-features">
+          <li data-en="Celebrity Cruises — Celebrity Infinity (90,940 tons)" data-cn="名人邮轮——名人无极号（90,940吨）">Celebrity Cruises — Celebrity Infinity (90,940 tons)</li>
+          <li data-en="Athens, Kusadasi (Turkey), Santorini, Rhodes, Mykonos &amp; Thessaloniki" data-cn="雅典、库萨达斯（土耳其）、圣托里尼、罗得岛、米科诺斯、塞萨洛尼基">Athens, Kusadasi (Turkey), Santorini, Rhodes, Mykonos &amp; Thessaloniki</li>
+          <li data-en="Round-trip from Athens (Piraeus), Greece" data-cn="希腊雅典（比雷埃夫斯）往返">Round-trip from Athens (Piraeus), Greece</li>
+          <li data-en="World-class dining, entertainment &amp; onboard amenities" data-cn="世界级餐饮、娱乐及船上设施">World-class dining, entertainment &amp; onboard amenities</li>
+          <li data-en="Premium guided tours with top-rated tour guides" data-cn="金牌导游带队，优质导览服务">Premium guided tours with top-rated tour guides</li>
+          <li data-en="All prices in USD, tax included" data-cn="所有价格均为美金含税价">All prices in USD, tax included</li>
+        </ul>
+      </div>
+
+      <p class="offering-dates" data-en="Departure: August 30, 2026 &nbsp;|&nbsp; Group Code: CIAEM8" data-cn="出发日期：2026年8月30日 &nbsp;|&nbsp; 团号：CIAEM8">Departure: August 30, 2026 &nbsp;|&nbsp; Group Code: CIAEM8</p>
+
+      <div class="offering-footer">
+        <div class="offering-price">
+          <span class="offering-price-current">$2,287<span style="font-size:0.5em;font-family:var(--font-body);font-weight:400;color:var(--text-mid);"> / room</span></span>
+          <span class="offering-price-note" data-en="Interior cabin (2 guests) &nbsp;·&nbsp; Balcony from $3,059/room" data-cn="两人内舱起 &nbsp;·&nbsp; 两人阳台从 $3,059/房起">Interior cabin (2 guests) &nbsp;·&nbsp; Balcony from $3,059/room</span>
+        </div>
+        <button onclick="document.getElementById('qrModal').style.display='flex'" class="offering-cta" data-en="Book Now" data-cn="立即预订">
+          Book Now
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </button>
+      </div>
+    </div>
+
+    </div>
   </section>
 
   <!-- ABOUT -->
@@ -876,7 +1360,7 @@
       <div class="section-divider"></div>
     </div>
     <div class="about-content">
-      <p class="about-text reveal" data-en="At Elite Travel, we believe every journey should be extraordinary. Based in California, we specialize in crafting bespoke travel experiences that go beyond the ordinary. Whether you're seeking a serene beach escape, a cultural expedition, or an adventurous getaway, we bring expertise, care, and attention to every detail." data-cn="在精英旅行，我们相信每一次旅程都应该是非凡的。我们立足加州，专注于打造超越平凡的定制旅行体验。无论您是寻求宁静的海滨度假、文化探索之旅，还是冒险之旅，我们都以专业、用心和对每个细节的关注为您服务。">At Elite Travel, we believe every journey should be extraordinary. Based in California, we specialize in crafting bespoke travel experiences that go beyond the ordinary. Whether you're seeking a serene beach escape, a cultural expedition, or an adventurous getaway, we bring expertise, care, and attention to every detail.</p>
+      <p class="about-text reveal" data-en="At Elite Travel, we believe every journey should be extraordinary. Based in California, we specialize in crafting bespoke travel experiences that go beyond the ordinary. Whether you're seeking a serene beach escape, a cultural expedition, or an adventurous getaway, we bring expertise, care, and attention to every detail." data-cn="在佳音旅行，我们相信每一次旅程都应该是非凡的。我们立足加州，专注于打造超越平凡的定制旅行体验。无论您是寻求宁静的海滨度假、文化探索之旅，还是冒险之旅，我们都以专业、用心和对每个细节的关注为您服务。">At Elite Travel, we believe every journey should be extraordinary. Based in California, we specialize in crafting bespoke travel experiences that go beyond the ordinary. Whether you're seeking a serene beach escape, a cultural expedition, or an adventurous getaway, we bring expertise, care, and attention to every detail.</p>
       <div class="about-founder reveal">
         <span class="about-founder-name">Annie Qi</span>
         <span class="about-founder-role" data-en="Founder &amp; Owner" data-cn="创始人">Founder &amp; Owner</span>
@@ -939,6 +1423,25 @@
     </div>
   </section>
 
+  <!-- QR MODAL -->
+  <div class="qr-modal" id="qrModal" onclick="if(event.target===this)this.style.display='none'">
+    <div class="qr-modal-card">
+      <button class="qr-modal-close" onclick="document.getElementById('qrModal').style.display='none'" aria-label="Close">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+      </button>
+      <h4 data-en="Book Now" data-cn="立即预订">Book Now</h4>
+      <p data-en="Add us on WeChat or give us a call" data-cn="添加微信或致电咨询预订">Add us on WeChat or give us a call</p>
+      <div style="display:flex;align-items:center;justify-content:center;gap:0.75rem;margin-bottom:1.25rem;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="color:#07c160;flex-shrink:0;"><path d="M15.85 8.14c.39 0 .77.03 1.14.08C16.31 5.25 13 3 9.23 3 4.96 3 1.5 5.82 1.5 9.31c0 2.02 1.09 3.67 2.91 4.94l-.73 2.19 2.54-1.27c.91.18 1.64.36 2.55.36.26 0 .52-.01.78-.04-.16-.58-.26-1.17-.26-1.79 0-3.11 2.92-5.56 6.56-5.56zM12.28 6.5c.55 0 .91.36.91.73 0 .36-.36.73-.91.73-.55 0-1.09-.37-1.09-.73 0-.37.54-.73 1.09-.73zM7.27 7.96c-.55 0-1.09-.37-1.09-.73 0-.37.54-.73 1.09-.73.55 0 .91.36.91.73 0 .36-.36.73-.91.73zM22.5 13.6c0-2.92-2.91-5.3-6.19-5.3-3.47 0-6.19 2.38-6.19 5.3 0 2.93 2.72 5.3 6.19 5.3.73 0 1.45-.18 2.18-.36l1.96 1.09-.55-1.82c1.46-1.09 2.6-2.74 2.6-4.21zm-8.19-.91c-.36 0-.72-.36-.72-.73 0-.36.36-.73.72-.73.55 0 .91.37.91.73 0 .37-.36.73-.91.73zm3.82 0c-.36 0-.73-.36-.73-.73 0-.36.37-.73.73-.73.55 0 .91.37.91.73 0 .37-.36.73-.91.73z"/></svg>
+        <span style="font-family:var(--font-body);font-size:1.1rem;font-weight:400;color:var(--deep-ocean);">annie7usa</span>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:center;gap:0.75rem;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1a7fb5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        <a href="tel:+14084993318" style="font-family:var(--font-body);font-size:1.1rem;font-weight:400;color:var(--azure);text-decoration:none;">+1 (408) 499-3318</a>
+      </div>
+    </div>
+  </div>
+
   <!-- FLIGHT PATH -->
   <div class="flight-path-container" id="flightPathContainer">
     <svg id="flightPathSvg" preserveAspectRatio="none">
@@ -953,7 +1456,7 @@
   <!-- FOOTER -->
   <footer>
     <div class="footer-logo"><span>Elite</span> Travel</div>
-    <p class="footer-copy" data-en="&copy; 2026 Elite Travel. All rights reserved." data-cn="&copy; 2026 精英旅行。保留所有权利。">&copy; 2026 Elite Travel. All rights reserved.</p>
+    <p class="footer-copy" data-en="&copy; 2026 Elite Travel. All rights reserved." data-cn="&copy; 2026 佳音旅行。保留所有权利。">&copy; 2026 Elite Travel. All rights reserved.</p>
   </footer>
 
   <script>
@@ -999,7 +1502,7 @@
       });
 
       document.title = lang === 'cn'
-        ? '精英旅行 | 您的旅程从这里开始'
+        ? '佳音旅行 | 您的旅程从这里开始'
         : 'Elite Travel | Your Journey Begins Here';
 
       // Plain text elements
