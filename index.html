@@ -724,6 +724,96 @@
       .offering-highlights { padding: 0 1.5rem; }
     }
 
+    /* ===== OFFERING CAROUSEL ===== */
+    .offering-carousel {
+      position: relative;
+      width: 100%;
+      height: 280px;
+      overflow: hidden;
+      border-radius: 16px;
+      margin: 0 2.5rem 1.5rem;
+      width: calc(100% - 5rem);
+    }
+
+    .carousel-track {
+      display: flex;
+      height: 100%;
+      transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .carousel-slide {
+      min-width: 100%;
+      height: 100%;
+    }
+
+    .carousel-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(4px);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--deep-ocean);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+      transition: all 0.3s;
+      z-index: 2;
+    }
+
+    .carousel-btn:hover {
+      background: var(--white);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .carousel-btn.prev { left: 0.75rem; }
+    .carousel-btn.next { right: 0.75rem; }
+
+    .carousel-dots {
+      position: absolute;
+      bottom: 0.75rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 0.4rem;
+      z-index: 2;
+    }
+
+    .carousel-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(255, 255, 255, 0.5);
+      cursor: pointer;
+      padding: 0;
+      transition: all 0.3s;
+    }
+
+    .carousel-dot.active {
+      background: var(--white);
+      transform: scale(1.2);
+    }
+
+    @media (max-width: 700px) {
+      .offering-carousel {
+        margin: 0 1.5rem 1.5rem;
+        width: calc(100% - 3rem);
+        height: 200px;
+      }
+    }
+
     /* ===== OFFERING CARD BLUE VARIANT ===== */
     .offering-card.blue {
       background: linear-gradient(135deg, #f0f4fa 0%, #e8f0fb 50%, #f0f7fa 100%);
@@ -1252,6 +1342,18 @@
         <p class="offering-subtitle" data-en="A premium 8-day journey through Japan's most stunning cherry blossom spots — from Mount Fuji and Hakone hot springs to Kyoto temples and Nara's deer parks." data-cn="8天7夜日本顶级赏樱之旅——从富士山到箱根温泉，从京都寺庙到奈良小鹿，沉浸式体验日本春日之美。">A premium 8-day journey through Japan's most stunning cherry blossom spots — from Mount Fuji and Hakone hot springs to Kyoto temples and Nara's deer parks.</p>
       </div>
 
+      <div class="offering-carousel" data-carousel>
+        <div class="carousel-track">
+          <div class="carousel-slide"><img src="japan-cherry-blossoms-temple.jpg" alt="Cherry blossoms at temple"></div>
+          <div class="carousel-slide"><img src="japan-mt-fuji-cherry-blossoms.jpg" alt="Mt Fuji with cherry blossoms"></div>
+          <div class="carousel-slide"><img src="japan-kyoto-temple.jpg" alt="Kyoto temple"></div>
+          <div class="carousel-slide"><img src="japan-cherry-blossom-river.jpg" alt="Cherry blossom river"></div>
+        </div>
+        <button class="carousel-btn prev" aria-label="Previous"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
+        <button class="carousel-btn next" aria-label="Next"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+        <div class="carousel-dots"></div>
+      </div>
+
       <div class="offering-highlights">
         <div class="offering-stat">
           <div class="offering-stat-number">8</div>
@@ -1302,6 +1404,18 @@
         <span class="offering-badge" data-en="Cruise Special" data-cn="邮轮特惠">Cruise Special</span>
         <h3 data-en-html="Athens &amp; <em>Eastern Mediterranean</em> Cruise" data-cn-html="希腊<em>爱琴海</em>邮轮之旅">Athens &amp; <em>Eastern Mediterranean</em> Cruise</h3>
         <p class="offering-subtitle" data-en="9 days and 8 nights aboard the Celebrity Infinity — sail the romantic Aegean islands including Santorini, Mykonos, Rhodes, and more." data-cn="乘坐名人无极号邮轮，9天8夜畅游浪漫爱琴海群岛——圣托里尼、米科诺斯、罗得岛等绝美目的地。">9 days and 8 nights aboard the Celebrity Infinity — sail the romantic Aegean islands including Santorini, Mykonos, Rhodes, and more.</p>
+      </div>
+
+      <div class="offering-carousel" data-carousel>
+        <div class="carousel-track">
+          <div class="carousel-slide"><img src="greece-santorini.jpg" alt="Santorini"></div>
+          <div class="carousel-slide"><img src="greece-mykonos.jpg" alt="Mykonos"></div>
+          <div class="carousel-slide"><img src="greece-mediterranean-sea.jpg" alt="Mediterranean Sea"></div>
+          <div class="carousel-slide"><img src="cruise-ship.jpg" alt="Cruise ship"></div>
+        </div>
+        <button class="carousel-btn prev" aria-label="Previous"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
+        <button class="carousel-btn next" aria-label="Next"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+        <div class="carousel-dots"></div>
       </div>
 
       <div class="offering-highlights">
@@ -1705,6 +1819,42 @@
         updatePlane();
       });
     })();
+
+    // Carousels
+    document.querySelectorAll('[data-carousel]').forEach(carousel => {
+      const track = carousel.querySelector('.carousel-track');
+      const slides = carousel.querySelectorAll('.carousel-slide');
+      const dotsContainer = carousel.querySelector('.carousel-dots');
+      const prevBtn = carousel.querySelector('.prev');
+      const nextBtn = carousel.querySelector('.next');
+      let current = 0;
+      let autoInterval;
+
+      slides.forEach((_, i) => {
+        const dot = document.createElement('button');
+        dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+        dot.addEventListener('click', () => goTo(i));
+        dotsContainer.appendChild(dot);
+      });
+
+      function goTo(index) {
+        current = (index + slides.length) % slides.length;
+        track.style.transform = 'translateX(-' + (current * 100) + '%)';
+        dotsContainer.querySelectorAll('.carousel-dot').forEach((d, i) => {
+          d.classList.toggle('active', i === current);
+        });
+      }
+
+      prevBtn.addEventListener('click', () => { goTo(current - 1); resetAuto(); });
+      nextBtn.addEventListener('click', () => { goTo(current + 1); resetAuto(); });
+
+      function resetAuto() {
+        clearInterval(autoInterval);
+        autoInterval = setInterval(() => goTo(current + 1), 5000);
+      }
+
+      autoInterval = setInterval(() => goTo(current + 1), 5000);
+    });
   </script>
 
 </body>
