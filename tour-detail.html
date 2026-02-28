@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tour | Elite Travel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/shared.css">
+  <style>
+    /* Gallery hero */
+    .detail-gallery {
+      position: relative;
+      height: 50vh;
+      min-height: 350px;
+      overflow: hidden;
+      background: var(--deep-ocean);
+    }
+
+    .detail-gallery .carousel-track {
+      display: flex;
+      height: 100%;
+      transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .detail-gallery .carousel-slide {
+      min-width: 100%;
+      height: 100%;
+    }
+
+    .detail-gallery .carousel-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .detail-gallery .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(4px);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--deep-ocean);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+      transition: all 0.3s;
+      z-index: 2;
+    }
+
+    .detail-gallery .carousel-btn:hover {
+      background: var(--white);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .detail-gallery .carousel-btn.prev { left: 1.5rem; }
+    .detail-gallery .carousel-btn.next { right: 1.5rem; }
+
+    .detail-gallery .carousel-dots {
+      position: absolute;
+      bottom: 1.25rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 0.5rem;
+      z-index: 2;
+    }
+
+    .detail-gallery .carousel-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(255, 255, 255, 0.5);
+      cursor: pointer;
+      padding: 0;
+      transition: all 0.3s;
+    }
+
+    .detail-gallery .carousel-dot.active {
+      background: var(--white);
+      transform: scale(1.3);
+    }
+
+    /* Cover image fallback (no gallery) */
+    .detail-cover {
+      height: 50vh;
+      min-height: 350px;
+      object-fit: cover;
+      width: 100%;
+      display: block;
+    }
+
+    .detail-cover-empty {
+      height: 50vh;
+      min-height: 350px;
+      background: var(--deep-ocean);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Info bar */
+    .detail-info {
+      max-width: 900px;
+      margin: -3rem auto 0;
+      position: relative;
+      z-index: 3;
+      background: var(--white);
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(10, 37, 64, 0.1);
+      padding: 2.5rem 3rem;
+    }
+
+    .detail-destination {
+      display: inline-block;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.75rem;
+      border-radius: 20px;
+      background: var(--pearl);
+      color: var(--azure);
+      margin-bottom: 0.75rem;
+    }
+
+    .detail-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 400;
+      color: var(--deep-ocean);
+      line-height: 1.2;
+      margin-bottom: 1.25rem;
+    }
+
+    .detail-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid rgba(10, 37, 64, 0.06);
+    }
+
+    .detail-meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .detail-meta-label {
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-light);
+    }
+
+    .detail-meta-value {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 500;
+      color: var(--deep-ocean);
+    }
+
+    .detail-meta-value.price {
+      color: var(--azure);
+      font-size: 1.5rem;
+    }
+
+    /* Content sections */
+    .detail-content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 3rem 3rem 2rem;
+    }
+
+    .detail-section {
+      margin-bottom: 3rem;
+    }
+
+    .detail-section-title {
+      font-family: var(--font-display);
+      font-size: 1.75rem;
+      font-weight: 500;
+      color: var(--deep-ocean);
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid rgba(10, 37, 64, 0.06);
+    }
+
+    .detail-description {
+      font-size: 0.95rem;
+      font-weight: 300;
+      color: var(--text-mid);
+      line-height: 1.8;
+      white-space: pre-line;
+    }
+
+    .detail-itinerary {
+      font-size: 0.95rem;
+      font-weight: 300;
+      color: var(--text-mid);
+      line-height: 1.8;
+      white-space: pre-line;
+    }
+
+    .detail-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .detail-list li {
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: var(--text-mid);
+      padding-left: 1.75rem;
+      position: relative;
+      line-height: 1.6;
+    }
+
+    .detail-list.includes li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--seafoam);
+      font-weight: 600;
+    }
+
+    .detail-list.excludes li::before {
+      content: '✕';
+      position: absolute;
+      left: 0;
+      color: #e87da0;
+      font-weight: 600;
+    }
+
+    /* CTA */
+    .detail-cta {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 3rem 5rem;
+      text-align: center;
+    }
+
+    .detail-cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--white);
+      text-decoration: none;
+      padding: 1rem 2.5rem;
+      border: none;
+      border-radius: 50px;
+      background: linear-gradient(135deg, var(--sky), var(--azure));
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .detail-cta-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(26, 127, 181, 0.3);
+    }
+
+    .detail-loading {
+      text-align: center;
+      padding: 8rem 2rem;
+      color: var(--text-light);
+      font-size: 1rem;
+    }
+
+    @media (max-width: 700px) {
+      .detail-info { margin: -2rem 1rem 0; padding: 2rem 1.5rem; }
+      .detail-content { padding: 2rem 1.5rem 1rem; }
+      .detail-cta { padding: 0 1.5rem 4rem; }
+      .detail-meta { gap: 1.25rem; }
+    }
+  </style>
+</head>
+<body data-inner-page="true">
+
+  <!-- NAV -->
+  <nav id="nav" class="scrolled">
+    <a href="/" class="nav-logo"><span>Elite</span> Travel</a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="/#services" data-en="Services" data-cn="服务项目">Services</a></li>
+      <li><a href="/tours" data-en="Tours" data-cn="精选旅程">Tours</a></li>
+      <li><a href="/#about" data-en="About" data-cn="关于我们">About</a></li>
+      <li><a href="/#contact" data-en="Contact" data-cn="联系我们">Contact</a></li>
+    </ul>
+    <div style="display:flex;align-items:center;">
+      <div class="lang-toggle" id="langToggle">
+        <button class="lang-btn active" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="cn">中文</button>
+      </div>
+      <button class="nav-toggle" id="navToggle" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div id="tourContent">
+    <div class="detail-loading" data-en="Loading tour..." data-cn="加载中...">Loading tour...</div>
+  </div>
+
+  <!-- QR MODAL -->
+  <div class="qr-modal" id="qrModal" onclick="if(event.target===this)this.style.display='none'">
+    <div class="qr-modal-card">
+      <button class="qr-modal-close" onclick="document.getElementById('qrModal').style.display='none'" aria-label="Close">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+      </button>
+      <h4 data-en="Inquire Now" data-cn="立即咨询">Inquire Now</h4>
+      <p data-en="Add us on WeChat or give us a call" data-cn="添加微信或致电咨询">Add us on WeChat or give us a call</p>
+      <div style="display:flex;align-items:center;justify-content:center;gap:0.75rem;margin-bottom:1.25rem;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="color:#07c160;flex-shrink:0;"><path d="M15.85 8.14c.39 0 .77.03 1.14.08C16.31 5.25 13 3 9.23 3 4.96 3 1.5 5.82 1.5 9.31c0 2.02 1.09 3.67 2.91 4.94l-.73 2.19 2.54-1.27c.91.18 1.64.36 2.55.36.26 0 .52-.01.78-.04-.16-.58-.26-1.17-.26-1.79 0-3.11 2.92-5.56 6.56-5.56zM12.28 6.5c.55 0 .91.36.91.73 0 .36-.36.73-.91.73-.55 0-1.09-.37-1.09-.73 0-.37.54-.73 1.09-.73zM7.27 7.96c-.55 0-1.09-.37-1.09-.73 0-.37.54-.73 1.09-.73.55 0 .91.36.91.73 0 .36-.36.73-.91.73zM22.5 13.6c0-2.92-2.91-5.3-6.19-5.3-3.47 0-6.19 2.38-6.19 5.3 0 2.93 2.72 5.3 6.19 5.3.73 0 1.45-.18 2.18-.36l1.96 1.09-.55-1.82c1.46-1.09 2.6-2.74 2.6-4.21zm-8.19-.91c-.36 0-.72-.36-.72-.73 0-.36.36-.73.72-.73.55 0 .91.37.91.73 0 .37-.36.73-.91.73zm3.82 0c-.36 0-.73-.36-.73-.73 0-.36.37-.73.73-.73.55 0 .91.37.91.73 0 .37-.36.73-.91.73z"/></svg>
+        <span style="font-family:var(--font-body);font-size:1.1rem;font-weight:400;color:var(--deep-ocean);">annie7usa</span>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:center;gap:0.75rem;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1a7fb5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        <a href="tel:+14084993318" style="font-family:var(--font-body);font-size:1.1rem;font-weight:400;color:var(--azure);text-decoration:none;">+1 (408) 499-3318</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo"><span>Elite</span> Travel</div>
+    <p class="footer-copy" data-en="&copy; 2026 Elite Travel. All rights reserved." data-cn="&copy; 2026 佳音旅行。保留所有权利。">&copy; 2026 Elite Travel. All rights reserved.</p>
+    <a href="/admin" class="footer-admin">Admin</a>
+  </footer>
+
+  <script src="/js/shared.js"></script>
+  <script>
+    // ===== CONFIG =====
+    const SUPABASE_URL = 'https://fttifyfyruuhqfapjayb.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ0dGlmeWZ5cnV1aHFmYXBqYXliIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIyNjM2NzUsImV4cCI6MjA4NzgzOTY3NX0.QuHrjsF6Xbcl2xA6H9IW6cnGk2JXMRDUK82q9_BIML4';
+
+    // Extract slug from URL path: /tour/some-slug
+    const slug = window.location.pathname.split('/tour/')[1];
+
+    if (!slug) {
+      window.location.href = '/tours';
+    }
+
+    let tour = null;
+
+    async function fetchTour() {
+      try {
+        const res = await fetch(
+          `${SUPABASE_URL}/rest/v1/tours?slug=eq.${encodeURIComponent(slug)}&status=eq.live&limit=1`,
+          {
+            headers: {
+              'apikey': SUPABASE_ANON_KEY,
+              'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+            }
+          }
+        );
+        if (!res.ok) throw new Error('Failed to fetch');
+        const tours = await res.json();
+        if (tours.length === 0) {
+          window.location.href = '/tours';
+          return;
+        }
+        tour = tours[0];
+        renderTour();
+      } catch (err) {
+        document.getElementById('tourContent').innerHTML =
+          '<div class="detail-loading">Unable to load tour. <a href="/tours">Back to Tours</a></div>';
+      }
+    }
+
+    function renderTour() {
+      const lang = window.currentLang;
+      const t = tour;
+      const title = lang === 'cn' && t.title_zh ? t.title_zh : t.title;
+      const dest = lang === 'cn' && t.destination_zh ? t.destination_zh : t.destination;
+      const summary = lang === 'cn' && t.summary_zh ? t.summary_zh : (t.summary || '');
+      const description = lang === 'cn' && t.description_zh ? t.description_zh : (t.description || '');
+      const itinerary = lang === 'cn' && t.itinerary_zh ? t.itinerary_zh : (t.itinerary || '');
+      const includes = lang === 'cn' && t.includes_zh ? t.includes_zh : (t.includes || '');
+      const excludes = lang === 'cn' && t.excludes_zh ? t.excludes_zh : (t.excludes || '');
+      const dates = lang === 'cn' && t.dates_zh ? t.dates_zh : (t.dates || '');
+      const price = Number(t.price_from).toLocaleString();
+      const currency = t.currency || 'USD';
+      const currencySymbol = currency === 'USD' ? '$' : currency;
+
+      const gallery = Array.isArray(t.gallery) && t.gallery.length > 0 ? t.gallery : [];
+      const allImages = t.cover_image ? [t.cover_image, ...gallery.filter(g => g !== t.cover_image)] : gallery;
+
+      document.title = `${title} | Elite Travel`;
+
+      let heroHTML = '';
+      if (allImages.length > 1) {
+        heroHTML = `
+          <div class="detail-gallery" data-carousel>
+            <div class="carousel-track">
+              ${allImages.map(img => `<div class="carousel-slide"><img src="${img}" alt="${title}"></div>`).join('')}
+            </div>
+            <button class="carousel-btn prev" aria-label="Previous"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
+            <button class="carousel-btn next" aria-label="Next"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+            <div class="carousel-dots"></div>
+          </div>
+        `;
+      } else if (allImages.length === 1) {
+        heroHTML = `<img src="${allImages[0]}" alt="${title}" class="detail-cover">`;
+      } else {
+        heroHTML = '<div class="detail-cover-empty"></div>';
+      }
+
+      const includesList = includes.split('\n').filter(l => l.trim());
+      const excludesList = excludes.split('\n').filter(l => l.trim());
+
+      const durationLabel = lang === 'cn' ? '时长' : 'Duration';
+      const datesLabel = lang === 'cn' ? '日期' : 'Dates';
+      const priceLabel = lang === 'cn' ? '价格起' : 'From';
+      const destLabel = lang === 'cn' ? '目的地' : 'Destination';
+      const descTitle = lang === 'cn' ? '行程介绍' : 'About This Tour';
+      const itinTitle = lang === 'cn' ? '行程安排' : 'Itinerary';
+      const inclTitle = lang === 'cn' ? '费用包含' : 'What\'s Included';
+      const exclTitle = lang === 'cn' ? '费用不包含' : 'What\'s Not Included';
+      const ctaText = lang === 'cn' ? '立即咨询' : 'Inquire Now';
+
+      let html = heroHTML;
+
+      html += `
+        <div class="detail-info reveal">
+          <span class="detail-destination">${dest}</span>
+          <h1 class="detail-title">${title}</h1>
+          <div class="detail-meta">
+            <div class="detail-meta-item">
+              <span class="detail-meta-label">${destLabel}</span>
+              <span class="detail-meta-value">${dest}</span>
+            </div>
+            <div class="detail-meta-item">
+              <span class="detail-meta-label">${durationLabel}</span>
+              <span class="detail-meta-value">${t.duration}</span>
+            </div>
+            ${dates ? `<div class="detail-meta-item"><span class="detail-meta-label">${datesLabel}</span><span class="detail-meta-value">${dates}</span></div>` : ''}
+            <div class="detail-meta-item">
+              <span class="detail-meta-label">${priceLabel}</span>
+              <span class="detail-meta-value price">${currencySymbol}${price}</span>
+            </div>
+          </div>
+        </div>
+      `;
+
+      html += '<div class="detail-content">';
+
+      if (description || summary) {
+        html += `
+          <div class="detail-section reveal">
+            <h2 class="detail-section-title">${descTitle}</h2>
+            <div class="detail-description">${description || summary}</div>
+          </div>
+        `;
+      }
+
+      if (itinerary) {
+        html += `
+          <div class="detail-section reveal">
+            <h2 class="detail-section-title">${itinTitle}</h2>
+            <div class="detail-itinerary">${itinerary}</div>
+          </div>
+        `;
+      }
+
+      if (includesList.length > 0) {
+        html += `
+          <div class="detail-section reveal">
+            <h2 class="detail-section-title">${inclTitle}</h2>
+            <ul class="detail-list includes">
+              ${includesList.map(item => `<li>${item.trim()}</li>`).join('')}
+            </ul>
+          </div>
+        `;
+      }
+
+      if (excludesList.length > 0) {
+        html += `
+          <div class="detail-section reveal">
+            <h2 class="detail-section-title">${exclTitle}</h2>
+            <ul class="detail-list excludes">
+              ${excludesList.map(item => `<li>${item.trim()}</li>`).join('')}
+            </ul>
+          </div>
+        `;
+      }
+
+      html += '</div>';
+
+      html += `
+        <div class="detail-cta reveal">
+          <button class="detail-cta-btn" onclick="document.getElementById('qrModal').style.display='flex'">
+            ${ctaText}
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </button>
+        </div>
+      `;
+
+      document.getElementById('tourContent').innerHTML = html;
+
+      // Init carousel if present
+      document.querySelectorAll('[data-carousel]').forEach(carousel => {
+        const track = carousel.querySelector('.carousel-track');
+        const slides = carousel.querySelectorAll('.carousel-slide');
+        const dotsContainer = carousel.querySelector('.carousel-dots');
+        const prevBtn = carousel.querySelector('.prev');
+        const nextBtn = carousel.querySelector('.next');
+        let current = 0;
+        let autoInterval;
+
+        slides.forEach((_, i) => {
+          const dot = document.createElement('button');
+          dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+          dot.addEventListener('click', () => goTo(i));
+          dotsContainer.appendChild(dot);
+        });
+
+        function goTo(index) {
+          current = (index + slides.length) % slides.length;
+          track.style.transform = 'translateX(-' + (current * 100) + '%)';
+          dotsContainer.querySelectorAll('.carousel-dot').forEach((d, i) => {
+            d.classList.toggle('active', i === current);
+          });
+        }
+
+        prevBtn.addEventListener('click', () => { goTo(current - 1); resetAuto(); });
+        nextBtn.addEventListener('click', () => { goTo(current + 1); resetAuto(); });
+
+        function resetAuto() {
+          clearInterval(autoInterval);
+          autoInterval = setInterval(() => goTo(current + 1), 5000);
+        }
+
+        autoInterval = setInterval(() => goTo(current + 1), 5000);
+      });
+
+      initReveal();
+    }
+
+    // Re-render on language switch
+    window.eliteLangCallbacks.push(lang => {
+      if (tour) renderTour();
+    });
+
+    fetchTour();
+  </script>
+</body>
+</html>

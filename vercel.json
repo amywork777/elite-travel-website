@@ -1,0 +1,15 @@
+{
+  "rewrites": [
+    { "source": "/tours", "destination": "/tours.html" },
+    { "source": "/tour/:slug", "destination": "/tour-detail.html" },
+    { "source": "/admin", "destination": "/admin.html" }
+  ],
+  "headers": [
+    {
+      "source": "/admin(.*)",
+      "headers": [
+        { "key": "X-Robots-Tag", "value": "noindex, nofollow" }
+      ]
+    }
+  ]
+}

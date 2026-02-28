@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tours | Elite Travel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/shared.css">
+  <style>
+    .tours-hero {
+      height: 40vh;
+      min-height: 280px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--deep-ocean);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .tours-hero .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.15;
+      animation: float 15s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(30px, -20px) scale(1.05); }
+      66% { transform: translate(-20px, 15px) scale(0.95); }
+    }
+
+    .tours-hero .orb-1 { width: 400px; height: 400px; background: var(--sky); top: -20%; right: -5%; }
+    .tours-hero .orb-2 { width: 250px; height: 250px; background: var(--seafoam); bottom: -10%; left: -5%; }
+
+    .tours-hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+    }
+
+    .tours-hero-content h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 300;
+      color: var(--white);
+      margin-bottom: 0.5rem;
+    }
+
+    .tours-hero-content h1 em {
+      font-style: italic;
+      font-weight: 400;
+      color: var(--sky);
+    }
+
+    .tours-hero-content p {
+      font-size: 1rem;
+      font-weight: 300;
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    /* Search bar */
+    .search-bar {
+      max-width: 480px;
+      margin: 2rem auto 0;
+      padding: 0 3rem;
+      position: relative;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 0.8rem 1.25rem 0.8rem 2.75rem;
+      border: 1px solid rgba(10, 37, 64, 0.1);
+      border-radius: 50px;
+      font-family: var(--font-body);
+      font-size: 0.88rem;
+      color: var(--text-dark);
+      background: var(--white);
+      outline: none;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    .search-input:focus {
+      border-color: var(--azure);
+      box-shadow: 0 4px 20px rgba(26, 127, 181, 0.1);
+    }
+
+    .search-input::placeholder { color: var(--text-light); }
+
+    .search-icon {
+      position: absolute;
+      left: calc(3rem + 0.9rem);
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-light);
+      pointer-events: none;
+    }
+
+    .search-clear {
+      position: absolute;
+      right: calc(3rem + 0.75rem);
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--text-light);
+      cursor: pointer;
+      padding: 0.25rem;
+      display: none;
+    }
+
+    .search-clear:hover { color: var(--deep-ocean); }
+
+    /* Filter bar */
+    .filter-bar {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      padding: 1.25rem 3rem 0;
+    }
+
+    .filter-pill {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      padding: 0.5rem 1.25rem;
+      border-radius: 30px;
+      border: 1px solid rgba(10, 37, 64, 0.1);
+      background: var(--white);
+      color: var(--text-mid);
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .filter-pill:hover, .filter-pill.active {
+      background: var(--azure);
+      color: var(--white);
+      border-color: var(--azure);
+    }
+
+    /* Tour cards grid */
+    .tours-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 3rem 3rem 7rem;
+    }
+
+    .tour-card {
+      background: var(--white);
+      border-radius: 20px;
+      overflow: hidden;
+      transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      position: relative;
+    }
+
+    .tour-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--azure), var(--seafoam));
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+
+    .tour-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 25px 60px rgba(10, 37, 64, 0.1);
+    }
+
+    .tour-card:hover::before { opacity: 1; }
+
+    .tour-card-img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+    }
+
+    .tour-card-body {
+      padding: 1.5rem 1.75rem 2rem;
+    }
+
+    .tour-card-destination {
+      display: inline-block;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.75rem;
+      border-radius: 20px;
+      background: var(--pearl);
+      color: var(--azure);
+      margin-bottom: 0.75rem;
+    }
+
+    .tour-card-title {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: var(--deep-ocean);
+      margin-bottom: 0.5rem;
+      line-height: 1.3;
+    }
+
+    .tour-card-summary {
+      font-size: 0.85rem;
+      font-weight: 300;
+      color: var(--text-mid);
+      line-height: 1.6;
+      margin-bottom: 1.25rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .tour-card-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(10, 37, 64, 0.06);
+    }
+
+    .tour-card-duration {
+      font-size: 0.78rem;
+      font-weight: 400;
+      color: var(--text-light);
+    }
+
+    .tour-card-price {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-weight: 500;
+      color: var(--azure);
+    }
+
+    .tour-card-price span {
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      font-weight: 400;
+      color: var(--text-light);
+    }
+
+    .tours-empty {
+      text-align: center;
+      padding: 4rem 2rem;
+      color: var(--text-light);
+      font-size: 1rem;
+      font-weight: 300;
+      grid-column: 1 / -1;
+    }
+
+    .tours-loading {
+      text-align: center;
+      padding: 4rem 2rem;
+      color: var(--text-light);
+      font-size: 0.9rem;
+      grid-column: 1 / -1;
+    }
+
+    @media (max-width: 700px) {
+      .tours-grid {
+        grid-template-columns: 1fr;
+        padding: 2rem 1.5rem 4rem;
+      }
+      .filter-bar { padding: 1rem 1.5rem 0; }
+      .search-bar { padding: 0 1.5rem; }
+      .search-icon { left: calc(1.5rem + 0.9rem); }
+      .search-clear { right: calc(1.5rem + 0.75rem); }
+    }
+  </style>
+</head>
+<body data-inner-page="true">
+
+  <!-- NAV -->
+  <nav id="nav" class="scrolled">
+    <a href="/" class="nav-logo"><span>Elite</span> Travel</a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="/#services" data-en="Services" data-cn="服务项目">Services</a></li>
+      <li><a href="/tours" data-en="Tours" data-cn="精选旅程">Tours</a></li>
+      <li><a href="/#about" data-en="About" data-cn="关于我们">About</a></li>
+      <li><a href="/#contact" data-en="Contact" data-cn="联系我们">Contact</a></li>
+    </ul>
+    <div style="display:flex;align-items:center;">
+      <div class="lang-toggle" id="langToggle">
+        <button class="lang-btn active" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="cn">中文</button>
+      </div>
+      <button class="nav-toggle" id="navToggle" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="tours-hero">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="tours-hero-content">
+      <h1 data-en-html="Our <em>Tours</em>" data-cn-html="我们的<em>旅程</em>">Our <em>Tours</em></h1>
+      <p data-en="Curated journeys to extraordinary destinations" data-cn="精心策划的非凡旅程">Curated journeys to extraordinary destinations</p>
+    </div>
+  </section>
+
+  <!-- SEARCH -->
+  <div class="search-bar">
+    <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+    <input type="text" class="search-input" id="searchInput" data-en-placeholder="Search tours..." data-cn-placeholder="搜索旅程..." placeholder="Search tours...">
+    <button class="search-clear" id="searchClear" aria-label="Clear search">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+    </button>
+  </div>
+
+  <!-- FILTER BAR -->
+  <div class="filter-bar" id="filterBar">
+    <button class="filter-pill active" data-filter="all" data-en="All" data-cn="全部">All</button>
+  </div>
+
+  <!-- TOURS GRID -->
+  <div class="tours-grid" id="toursGrid">
+    <div class="tours-loading" data-en="Loading tours..." data-cn="加载中...">Loading tours...</div>
+  </div>
+
+  <!-- QR MODAL -->
+  <div class="qr-modal" id="qrModal" onclick="if(event.target===this)this.style.display='none'">
+    <div class="qr-modal-card">
+      <button class="qr-modal-close" onclick="document.getElementById('qrModal').style.display='none'" aria-label="Close">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+      </button>
+      <h4 data-en="Book Now" data-cn="立即预订">Book Now</h4>
+      <p data-en="Add us on WeChat or give us a call" data-cn="添加微信或致电咨询预订">Add us on WeChat or give us a call</p>
+      <div style="display:flex;align-items:center;justify-content:center;gap:0.75rem;margin-bottom:1.25rem;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="color:#07c160;flex-shrink:0;"><path d="M15.85 8.14c.39 0 .77.03 1.14.08C16.31 5.25 13 3 9.23 3 4.96 3 1.5 5.82 1.5 9.31c0 2.02 1.09 3.67 2.91 4.94l-.73 2.19 2.54-1.27c.91.18 1.64.36 2.55.36.26 0 .52-.01.78-.04-.16-.58-.26-1.17-.26-1.79 0-3.11 2.92-5.56 6.56-5.56zM12.28 6.5c.55 0 .91.36.91.73 0 .36-.36.73-.91.73-.55 0-1.09-.37-1.09-.73 0-.37.54-.73 1.09-.73zM7.27 7.96c-.55 0-1.09-.37-1.09-.73 0-.37.54-.73 1.09-.73.55 0 .91.36.91.73 0 .36-.36.73-.91.73zM22.5 13.6c0-2.92-2.91-5.3-6.19-5.3-3.47 0-6.19 2.38-6.19 5.3 0 2.93 2.72 5.3 6.19 5.3.73 0 1.45-.18 2.18-.36l1.96 1.09-.55-1.82c1.46-1.09 2.6-2.74 2.6-4.21zm-8.19-.91c-.36 0-.72-.36-.72-.73 0-.36.36-.73.72-.73.55 0 .91.37.91.73 0 .37-.36.73-.91.73zm3.82 0c-.36 0-.73-.36-.73-.73 0-.36.37-.73.73-.73.55 0 .91.37.91.73 0 .37-.36.73-.91.73z"/></svg>
+        <span style="font-family:var(--font-body);font-size:1.1rem;font-weight:400;color:var(--deep-ocean);">annie7usa</span>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:center;gap:0.75rem;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1a7fb5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        <a href="tel:+14084993318" style="font-family:var(--font-body);font-size:1.1rem;font-weight:400;color:var(--azure);text-decoration:none;">+1 (408) 499-3318</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo"><span>Elite</span> Travel</div>
+    <p class="footer-copy" data-en="&copy; 2026 Elite Travel. All rights reserved." data-cn="&copy; 2026 佳音旅行。保留所有权利。">&copy; 2026 Elite Travel. All rights reserved.</p>
+    <a href="/admin" class="footer-admin">Admin</a>
+  </footer>
+
+  <script src="/js/shared.js"></script>
+  <script>
+    // ===== CONFIG =====
+    // TODO: Replace with your Supabase project URL and anon key
+    const SUPABASE_URL = 'https://fttifyfyruuhqfapjayb.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ0dGlmeWZ5cnV1aHFmYXBqYXliIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIyNjM2NzUsImV4cCI6MjA4NzgzOTY3NX0.QuHrjsF6Xbcl2xA6H9IW6cnGk2JXMRDUK82q9_BIML4';
+
+    let allTours = [];
+    let activeFilter = 'all';
+    let searchQuery = '';
+
+    // Search
+    const searchInput = document.getElementById('searchInput');
+    const searchClear = document.getElementById('searchClear');
+
+    searchInput.addEventListener('input', () => {
+      searchQuery = searchInput.value.trim().toLowerCase();
+      searchClear.style.display = searchQuery ? 'block' : 'none';
+      renderTours();
+    });
+
+    searchClear.addEventListener('click', () => {
+      searchInput.value = '';
+      searchQuery = '';
+      searchClear.style.display = 'none';
+      renderTours();
+    });
+
+    async function fetchTours() {
+      try {
+        const res = await fetch(`${SUPABASE_URL}/rest/v1/tours?status=eq.live&order=featured.desc,created_at.desc`, {
+          headers: {
+            'apikey': SUPABASE_ANON_KEY,
+            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+          }
+        });
+        if (!res.ok) throw new Error('Failed to fetch');
+        allTours = await res.json();
+        buildFilters();
+        renderTours();
+      } catch (err) {
+        document.getElementById('toursGrid').innerHTML =
+          '<div class="tours-empty" data-en="Unable to load tours. Please try again later." data-cn="无法加载旅程，请稍后再试。">Unable to load tours. Please try again later.</div>';
+      }
+    }
+
+    function buildFilters() {
+      const destinations = [...new Set(allTours.map(t => t.destination))].sort();
+      const bar = document.getElementById('filterBar');
+      // Keep the "All" pill
+      const allPill = bar.querySelector('[data-filter="all"]');
+      bar.innerHTML = '';
+      bar.appendChild(allPill);
+
+      destinations.forEach(dest => {
+        const tour = allTours.find(t => t.destination === dest);
+        const btn = document.createElement('button');
+        btn.className = 'filter-pill';
+        btn.dataset.filter = dest;
+        const destZh = tour?.destination_zh || dest;
+        btn.setAttribute('data-en', dest);
+        btn.setAttribute('data-cn', destZh);
+        btn.textContent = window.currentLang === 'cn' ? destZh : dest;
+        btn.addEventListener('click', () => setFilter(dest));
+        bar.appendChild(btn);
+      });
+    }
+
+    function setFilter(filter) {
+      activeFilter = filter;
+      document.querySelectorAll('.filter-pill').forEach(p => {
+        p.classList.toggle('active', p.dataset.filter === filter);
+      });
+      renderTours();
+    }
+
+    // Reset "All" pill listener
+    document.querySelector('[data-filter="all"]').addEventListener('click', () => setFilter('all'));
+
+    function renderTours() {
+      const grid = document.getElementById('toursGrid');
+      const lang = window.currentLang;
+      let filtered = activeFilter === 'all'
+        ? allTours
+        : allTours.filter(t => t.destination === activeFilter);
+
+      if (searchQuery) {
+        filtered = filtered.filter(t => {
+          const fields = [t.title, t.title_zh, t.destination, t.destination_zh,
+            t.summary, t.summary_zh, t.description, t.description_zh,
+            t.duration, t.dates, t.dates_zh].filter(Boolean);
+          return fields.some(f => f.toLowerCase().includes(searchQuery));
+        });
+      }
+
+      if (filtered.length === 0) {
+        grid.innerHTML = '<div class="tours-empty" data-en="No tours available yet. Check back soon!" data-cn="暂无旅程，请稍后查看！">No tours available yet. Check back soon!</div>';
+        if (lang === 'cn') setLanguage('cn');
+        return;
+      }
+
+      grid.innerHTML = filtered.map((tour, i) => {
+        const title = lang === 'cn' && tour.title_zh ? tour.title_zh : tour.title;
+        const summary = lang === 'cn' && tour.summary_zh ? tour.summary_zh : (tour.summary || '');
+        const dest = lang === 'cn' && tour.destination_zh ? tour.destination_zh : tour.destination;
+        const coverImg = tour.cover_image || '';
+        const price = Number(tour.price_from).toLocaleString();
+        const currency = tour.currency || 'USD';
+        const currencySymbol = currency === 'USD' ? '$' : currency;
+
+        return `
+          <a href="/tour/${tour.slug}" class="tour-card reveal reveal-delay-${(i % 5) + 1}">
+            ${coverImg ? `<img src="${coverImg}" alt="${title}" class="tour-card-img">` : '<div class="tour-card-img" style="background:var(--pearl);"></div>'}
+            <div class="tour-card-body">
+              <span class="tour-card-destination">${dest}</span>
+              <h3 class="tour-card-title">${title}</h3>
+              <p class="tour-card-summary">${summary}</p>
+              <div class="tour-card-meta">
+                <span class="tour-card-duration">${tour.duration}</span>
+                <span class="tour-card-price">${currencySymbol}${price} <span>/ ${lang === 'cn' ? '人起' : 'person'}</span></span>
+              </div>
+            </div>
+          </a>
+        `;
+      }).join('');
+
+      initReveal();
+    }
+
+    // Re-render on language switch
+    window.eliteLangCallbacks.push(lang => {
+      document.title = lang === 'cn' ? '旅程 | 佳音旅行' : 'Tours | Elite Travel';
+      searchInput.placeholder = lang === 'cn' ? '搜索旅程...' : 'Search tours...';
+      renderTours();
+      // Re-apply language to filter pills
+      document.querySelectorAll('.filter-pill').forEach(p => {
+        const text = p.getAttribute('data-' + lang);
+        if (text) p.textContent = text;
+      });
+    });
+
+    fetchTours();
+  </script>
+</body>
+</html>

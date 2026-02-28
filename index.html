@@ -7,177 +7,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/shared.css">
   <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-    :root {
-      --deep-ocean: #0a2540;
-      --azure: #1a7fb5;
-      --sky: #4db8d9;
-      --seafoam: #7dd3c0;
-      --pearl: #f0f7fa;
-      --sand: #faf6f1;
-      --white: #ffffff;
-      --gold: #c9a84c;
-      --text-dark: #0d1b2a;
-      --text-mid: #3d5a73;
-      --text-light: #7a9bb5;
-      --font-display: 'Cormorant Garamond', Georgia, serif;
-      --font-body: 'Outfit', system-ui, sans-serif;
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      font-family: var(--font-body);
-      color: var(--text-dark);
-      background: var(--white);
-      overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    /* ===== NAV ===== */
-    nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 100;
-      padding: 1.25rem 3rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-
-    nav.scrolled {
-      background: rgba(255, 255, 255, 0.92);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      padding: 0.75rem 3rem;
-      box-shadow: 0 1px 30px rgba(10, 37, 64, 0.06);
-    }
-
-    .nav-logo {
-      font-family: var(--font-display);
-      font-size: 1.75rem;
-      font-weight: 300;
-      color: var(--white);
-      text-decoration: none;
-      letter-spacing: 0.02em;
-      transition: color 0.4s;
-    }
-
-    .nav-logo span {
-      font-weight: 600;
-      font-style: italic;
-    }
-
-    nav.scrolled .nav-logo { color: var(--deep-ocean); }
-
-    .nav-links {
-      display: flex;
-      gap: 2.5rem;
-      list-style: none;
-    }
-
-    .nav-links a {
-      font-family: var(--font-body);
-      font-size: 0.8rem;
-      font-weight: 400;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: rgba(255, 255, 255, 0.85);
-      text-decoration: none;
-      position: relative;
-      padding-bottom: 4px;
-      transition: color 0.4s;
-    }
-
-    nav.scrolled .nav-links a { color: var(--text-mid); }
-    nav.scrolled .nav-links a:hover { color: var(--deep-ocean); }
-
-    .nav-links a::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 0;
-      height: 1px;
-      background: currentColor;
-      transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-
-    .nav-links a:hover::after { width: 100%; }
-    .nav-links a:hover { color: var(--white); }
-
-    .nav-toggle {
-      display: none;
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 0.5rem;
-    }
-
-    .nav-toggle span {
-      display: block;
-      width: 24px;
-      height: 2px;
-      background: var(--white);
-      margin: 5px 0;
-      transition: all 0.3s;
-    }
-
-    nav.scrolled .nav-toggle span { background: var(--deep-ocean); }
-
-    /* ===== LANG TOGGLE ===== */
-    .lang-toggle {
-      display: flex;
-      align-items: center;
-      gap: 0;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 30px;
-      padding: 3px;
-      margin-left: 1.5rem;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      transition: all 0.4s;
-    }
-
-    nav.scrolled .lang-toggle {
-      background: rgba(10, 37, 64, 0.06);
-      border-color: rgba(10, 37, 64, 0.1);
-    }
-
-    .lang-btn {
-      font-family: var(--font-body);
-      font-size: 0.7rem;
-      font-weight: 500;
-      letter-spacing: 0.05em;
-      padding: 0.35rem 0.85rem;
-      border: none;
-      border-radius: 30px;
-      cursor: pointer;
-      transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-      background: transparent;
-      color: rgba(255, 255, 255, 0.5);
-    }
-
-    nav.scrolled .lang-btn { color: var(--text-light); }
-
-    .lang-btn.active {
-      background: var(--white);
-      color: var(--deep-ocean);
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
-    }
-
-    nav.scrolled .lang-btn.active {
-      background: var(--deep-ocean);
-      color: var(--white);
-    }
-
-    .lang-btn:hover:not(.active) { color: var(--white); }
-    nav.scrolled .lang-btn:hover:not(.active) { color: var(--deep-ocean); }
-
     /* ===== HERO ===== */
     .hero {
       position: relative;
@@ -384,51 +215,6 @@
       .hero-stat-number { font-size: 1.5rem; }
     }
 
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* ===== SECTION SHARED ===== */
-    section { position: relative; }
-
-    .section-pad { padding: 7rem 3rem; }
-
-    .section-header {
-      text-align: center;
-      margin-bottom: 4rem;
-    }
-
-    .section-eyebrow {
-      font-family: var(--font-body);
-      font-size: 0.7rem;
-      font-weight: 500;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--azure);
-      margin-bottom: 1rem;
-    }
-
-    .section-title {
-      font-family: var(--font-display);
-      font-size: clamp(2rem, 4vw, 3.25rem);
-      font-weight: 400;
-      color: var(--deep-ocean);
-      line-height: 1.15;
-    }
-
-    .section-title em {
-      font-style: italic;
-      color: var(--azure);
-    }
-
-    .section-divider {
-      width: 50px;
-      height: 1px;
-      background: linear-gradient(90deg, var(--azure), var(--seafoam));
-      margin: 1.5rem auto 0;
-    }
-
     /* ===== SERVICES ===== */
     .services { background: var(--pearl); }
 
@@ -529,165 +315,220 @@
       color: var(--azure);
     }
 
-    /* ===== OFFERINGS ===== */
-    .offerings { background: var(--white); }
+    /* ===== FEATURED TOURS ===== */
+    .featured-tours { background: var(--white); }
 
-    .offering-card {
-      max-width: 900px;
+    .featured-carousel {
+      position: relative;
+      max-width: 1100px;
       margin: 0 auto;
-      background: linear-gradient(135deg, #fff5f5 0%, #fff0f7 50%, #fef5ff 100%);
-      border-radius: 24px;
+    }
+
+    .fc-viewport {
       overflow: hidden;
-      box-shadow: 0 20px 60px rgba(10, 37, 64, 0.06);
+    }
+
+    .fc-track {
+      display: flex;
+      gap: 2rem;
+      transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .fc-track .tour-card {
+      width: calc((100% - 4rem) / 3);
+      min-width: calc((100% - 4rem) / 3);
+      max-width: calc((100% - 4rem) / 3);
+      flex-shrink: 0;
+    }
+
+    .fc-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-80%);
+      z-index: 5;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid rgba(10, 37, 64, 0.1);
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--deep-ocean);
+      transition: all 0.3s;
+      box-shadow: 0 4px 16px rgba(10, 37, 64, 0.08);
+    }
+
+    .fc-arrow:hover {
+      background: var(--azure);
+      color: white;
+      border-color: var(--azure);
+    }
+
+    .fc-arrow:disabled {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .fc-prev { left: -56px; }
+    .fc-next { right: -56px; }
+
+    .fc-dots {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 1.75rem;
+    }
+
+    .fc-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(10, 37, 64, 0.15);
+      cursor: pointer;
+      padding: 0;
+      transition: all 0.3s;
+    }
+
+    .fc-dot.active {
+      background: var(--azure);
+      width: 24px;
+      border-radius: 4px;
+    }
+
+    .tour-card {
+      background: var(--white);
+      border-radius: 20px;
+      overflow: hidden;
+      transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+      display: block;
       position: relative;
     }
 
-    .offering-card::before {
+    .tour-card::before {
       content: '';
       position: absolute;
       top: 0; left: 0; right: 0;
-      height: 4px;
-      background: linear-gradient(90deg, #f4a0b5, #e87da0, #d4649a);
+      height: 3px;
+      background: linear-gradient(90deg, var(--azure), var(--seafoam));
+      opacity: 0;
+      transition: opacity 0.4s;
     }
 
-    .offering-header {
-      padding: 2.5rem 2.5rem 1.5rem;
-      text-align: center;
+    .tour-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 25px 60px rgba(10, 37, 64, 0.1);
     }
 
-    .offering-badge {
+    .tour-card:hover::before { opacity: 1; }
+
+    .tour-card-img {
+      width: 100%;
+      height: 220px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .tour-card-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .tour-card:hover .tour-card-img img {
+      transform: scale(1.05);
+    }
+
+    .tour-card-dest {
+      position: absolute;
+      top: 0.75rem;
+      left: 0.75rem;
       display: inline-block;
-      font-size: 0.7rem;
+      font-size: 0.65rem;
       font-weight: 600;
       letter-spacing: 0.15em;
       text-transform: uppercase;
-      padding: 0.4rem 1rem;
+      padding: 0.3rem 0.75rem;
       border-radius: 20px;
-      background: linear-gradient(135deg, #e87da0, #d4649a);
-      color: var(--white);
-      margin-bottom: 1rem;
+      background: rgba(255,255,255,0.92);
+      color: var(--azure);
+      backdrop-filter: blur(4px);
     }
 
-    .offering-header h3 {
+    .tour-card-body {
+      padding: 1.5rem 1.75rem 2rem;
+    }
+
+    .tour-card-destination {
+      display: inline-block;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.75rem;
+      border-radius: 20px;
+      background: var(--pearl);
+      color: var(--azure);
+      margin-bottom: 0.75rem;
+    }
+
+    .tour-card-title {
       font-family: var(--font-display);
-      font-size: clamp(1.75rem, 3.5vw, 2.5rem);
-      font-weight: 400;
-      color: var(--deep-ocean);
-      line-height: 1.2;
-      margin-bottom: 0.5rem;
-    }
-
-    .offering-header h3 em {
-      font-style: italic;
-      color: #d4649a;
-    }
-
-    .offering-subtitle {
-      font-size: 0.95rem;
-      font-weight: 300;
-      color: var(--text-mid);
-      line-height: 1.6;
-    }
-
-    .offering-highlights {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 0;
-      padding: 0 2.5rem;
-    }
-
-    .offering-stat {
-      text-align: center;
-      padding: 1.25rem 0.75rem;
-      border-right: 1px solid rgba(212, 100, 154, 0.1);
-    }
-
-    .offering-stat:last-child { border-right: none; }
-
-    .offering-stat-number {
-      font-family: var(--font-display);
-      font-size: 2rem;
+      font-size: 1.5rem;
       font-weight: 500;
-      color: #d4649a;
-      line-height: 1;
+      color: var(--deep-ocean);
+      margin-bottom: 0.5rem;
+      line-height: 1.3;
     }
 
-    .offering-stat-label {
-      font-size: 0.72rem;
-      font-weight: 400;
-      color: var(--text-mid);
-      margin-top: 0.35rem;
-      line-height: 1.4;
-    }
-
-    .offering-details {
-      padding: 1.5rem 2.5rem;
-    }
-
-    .offering-features {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.6rem 2rem;
-      list-style: none;
-    }
-
-    .offering-features li {
+    .tour-card-summary {
       font-size: 0.85rem;
       font-weight: 300;
       color: var(--text-mid);
-      padding-left: 1.25rem;
-      position: relative;
       line-height: 1.6;
+      margin-bottom: 1.25rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
 
-    .offering-features li::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 0.55rem;
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: #e87da0;
-    }
-
-    .offering-footer {
-      padding: 1.5rem 2.5rem 2.5rem;
+    .tour-card-meta {
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      gap: 1.5rem;
-      flex-wrap: wrap;
+      align-items: center;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(10, 37, 64, 0.06);
     }
 
-    .offering-price {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .offering-price-original {
-      font-size: 0.8rem;
+    .tour-card-duration {
+      font-size: 0.78rem;
       font-weight: 400;
       color: var(--text-light);
-      text-decoration: line-through;
     }
 
-    .offering-price-current {
+    .tour-card-price {
       font-family: var(--font-display);
-      font-size: 2.25rem;
+      font-size: 1.35rem;
       font-weight: 500;
-      color: #d4649a;
-      line-height: 1.1;
+      color: var(--azure);
     }
 
-    .offering-price-note {
-      font-size: 0.72rem;
+    .tour-card-price span {
+      font-family: var(--font-body);
+      font-size: 0.7rem;
       font-weight: 400;
-      color: var(--text-mid);
-      margin-top: 0.2rem;
+      color: var(--text-light);
     }
 
-    .offering-cta {
+    .view-all-btn {
       display: inline-flex;
       align-items: center;
       gap: 0.6rem;
@@ -701,248 +542,29 @@
       padding: 0.9rem 2rem;
       border: none;
       border-radius: 50px;
-      background: linear-gradient(135deg, #e87da0, #d4649a);
+      background: linear-gradient(135deg, var(--sky), var(--azure));
       cursor: pointer;
       transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
-    .offering-cta:hover {
+    .view-all-btn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 12px 30px rgba(212, 100, 154, 0.3);
-    }
-
-    .offering-cta svg { transition: transform 0.3s; }
-    .offering-cta:hover svg { transform: translateX(3px); }
-
-    .offering-dates {
-      text-align: center;
-      padding: 0 2.5rem 0.5rem;
-      font-size: 0.78rem;
-      font-weight: 400;
-      color: var(--text-light);
-    }
-
-    @media (max-width: 700px) {
-      .offering-highlights { grid-template-columns: repeat(2, 1fr); }
-      .offering-stat { border-bottom: 1px solid rgba(212, 100, 154, 0.1); }
-      .offering-stat:nth-child(2) { border-right: none; }
-      .offering-features { grid-template-columns: 1fr; }
-      .offering-footer { flex-direction: column; text-align: center; align-items: center; }
-      .offering-header, .offering-details, .offering-footer { padding-left: 1.5rem; padding-right: 1.5rem; }
-      .offering-highlights { padding: 0 1.5rem; }
-    }
-
-    /* ===== OFFERING CAROUSEL ===== */
-    .offering-carousel {
-      position: relative;
-      width: 100%;
-      height: 280px;
-      overflow: hidden;
-      border-radius: 16px;
-      margin: 0 2.5rem 1.5rem;
-      width: calc(100% - 5rem);
-    }
-
-    .carousel-track {
-      display: flex;
-      height: 100%;
-      transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-
-    .carousel-slide {
-      min-width: 100%;
-      height: 100%;
-    }
-
-    .carousel-slide img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .carousel-btn {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      border: none;
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(4px);
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--deep-ocean);
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
-      transition: all 0.3s;
-      z-index: 2;
-    }
-
-    .carousel-btn:hover {
-      background: var(--white);
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
-    }
-
-    .carousel-btn.prev { left: 0.75rem; }
-    .carousel-btn.next { right: 0.75rem; }
-
-    .carousel-dots {
-      position: absolute;
-      bottom: 0.75rem;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 0.4rem;
-      z-index: 2;
-    }
-
-    .carousel-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      border: none;
-      background: rgba(255, 255, 255, 0.5);
-      cursor: pointer;
-      padding: 0;
-      transition: all 0.3s;
-    }
-
-    .carousel-dot.active {
-      background: var(--white);
-      transform: scale(1.2);
-    }
-
-    @media (max-width: 700px) {
-      .offering-carousel {
-        margin: 0 1.5rem 1.5rem;
-        width: calc(100% - 3rem);
-        height: 200px;
-      }
-    }
-
-    /* ===== OFFERING CARD BLUE VARIANT ===== */
-    .offering-card.blue {
-      background: linear-gradient(135deg, #f0f4fa 0%, #e8f0fb 50%, #f0f7fa 100%);
-    }
-
-    .offering-card.blue::before {
-      background: linear-gradient(90deg, var(--sky), var(--azure));
-    }
-
-    .offering-card.blue .offering-badge {
-      background: linear-gradient(135deg, var(--sky), var(--azure));
-    }
-
-    .offering-card.blue .offering-header h3 em {
-      color: var(--azure);
-    }
-
-    .offering-card.blue .offering-stat-number {
-      color: var(--azure);
-    }
-
-    .offering-card.blue .offering-stat {
-      border-right-color: rgba(26, 127, 181, 0.1);
-    }
-
-    .offering-card.blue .offering-features li::before {
-      background: var(--azure);
-    }
-
-    .offering-card.blue .offering-price-current {
-      color: var(--azure);
-    }
-
-    .offering-card.blue .offering-cta {
-      background: linear-gradient(135deg, var(--sky), var(--azure));
-    }
-
-    .offering-card.blue .offering-cta:hover {
       box-shadow: 0 12px 30px rgba(26, 127, 181, 0.3);
     }
 
-    .offerings-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 3rem;
+    @media (max-width: 1200px) {
+      .fc-prev { left: 8px; }
+      .fc-next { right: 8px; }
+      .fc-arrow { background: rgba(255,255,255,0.9); }
     }
 
-    /* ===== QR MODAL ===== */
-    .qr-modal {
-      display: none;
-      position: fixed;
-      inset: 0;
-      z-index: 200;
-      align-items: center;
-      justify-content: center;
-      background: rgba(10, 37, 64, 0.6);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
+    @media (max-width: 900px) {
+      .fc-track .tour-card { width: calc((100% - 2rem) / 2); min-width: calc((100% - 2rem) / 2); max-width: calc((100% - 2rem) / 2); }
     }
 
-    .qr-modal-card {
-      background: var(--white);
-      border-radius: 20px;
-      padding: 2.5rem 2rem;
-      max-width: 360px;
-      width: 90%;
-      text-align: center;
-      position: relative;
-      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.25);
-      animation: fadeUp 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    @media (max-width: 600px) {
+      .fc-track .tour-card { width: 100%; min-width: 100%; max-width: 100%; }
     }
-
-    .qr-modal-close {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      background: none;
-      border: none;
-      cursor: pointer;
-      color: var(--text-light);
-      padding: 0.25rem;
-      transition: color 0.3s;
-    }
-
-    .qr-modal-close:hover { color: var(--deep-ocean); }
-
-    .qr-modal-card h4 {
-      font-family: var(--font-display);
-      font-size: 1.5rem;
-      font-weight: 500;
-      color: var(--deep-ocean);
-      margin-bottom: 0.35rem;
-    }
-
-    .qr-modal-card p {
-      font-size: 0.85rem;
-      font-weight: 300;
-      color: var(--text-mid);
-      margin-bottom: 1.25rem;
-    }
-
-    .qr-modal-card img {
-      width: 240px;
-      height: 240px;
-      object-fit: contain;
-      border-radius: 12px;
-      margin-bottom: 1rem;
-    }
-
-    .qr-modal-phone {
-      font-size: 0.8rem;
-      font-weight: 400;
-      color: var(--text-light);
-    }
-
-    .qr-modal-phone a {
-      color: var(--azure);
-      text-decoration: none;
-    }
-
-    .qr-modal-phone a:hover { text-decoration: underline; }
 
     /* ===== ABOUT ===== */
     .about { background: var(--white); }
@@ -1057,30 +679,6 @@
 
     .contact-item-text a:hover { color: var(--sky); }
 
-    /* ===== FOOTER ===== */
-    footer {
-      background: #061a2e;
-      padding: 2.5rem 3rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .footer-logo {
-      font-family: var(--font-display);
-      font-size: 1.25rem;
-      font-weight: 300;
-      color: rgba(255, 255, 255, 0.6);
-    }
-
-    .footer-logo span { font-weight: 600; font-style: italic; }
-
-    .footer-copy {
-      font-size: 0.75rem;
-      font-weight: 300;
-      color: rgba(255, 255, 255, 0.25);
-    }
-
     /* ===== FLIGHT PATH ===== */
     .flight-path-container {
       position: fixed;
@@ -1131,47 +729,8 @@
       .flight-path-container, .plane-icon { display: none; }
     }
 
-    /* ===== SCROLL ANIMATIONS ===== */
-    .reveal {
-      opacity: 0;
-      transform: translateY(40px);
-      transition: all 0.9s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .reveal-delay-1 { transition-delay: 0.1s; }
-    .reveal-delay-2 { transition-delay: 0.2s; }
-    .reveal-delay-3 { transition-delay: 0.3s; }
-    .reveal-delay-4 { transition-delay: 0.4s; }
-    .reveal-delay-5 { transition-delay: 0.5s; }
-
     /* ===== RESPONSIVE ===== */
     @media (max-width: 900px) {
-      nav { padding: 1rem 1.5rem; }
-      nav.scrolled { padding: 0.75rem 1.5rem; }
-      .nav-links { display: none; }
-      .nav-toggle { display: block; }
-
-      .nav-links.open {
-        display: flex;
-        flex-direction: column;
-        position: absolute;
-        top: 100%;
-        left: 0; right: 0;
-        background: rgba(10, 37, 64, 0.97);
-        backdrop-filter: blur(20px);
-        padding: 2rem;
-        gap: 1.5rem;
-      }
-
-      nav.scrolled .nav-links.open a { color: var(--white); }
-
-      .section-pad { padding: 4rem 1.5rem; }
-
       .services-grid {
         grid-template-columns: 1fr;
         max-width: 500px;
@@ -1180,13 +739,6 @@
       .services-grid-row2 {
         grid-template-columns: 1fr;
         max-width: 500px;
-      }
-
-      footer {
-        flex-direction: column;
-        gap: 1rem;
-        text-align: center;
-        padding: 2rem 1.5rem;
       }
     }
   </style>
@@ -1198,7 +750,7 @@
     <a href="#" class="nav-logo"><span>Elite</span> Travel</a>
     <ul class="nav-links" id="navLinks">
       <li><a href="#services" data-en="Services" data-cn="服务项目">Services</a></li>
-      <li><a href="#offerings" data-en="Offerings" data-cn="精选行程">Offerings</a></li>
+      <li><a href="#tours" data-en="Tours" data-cn="精选旅程">Tours</a></li>
       <li><a href="#about" data-en="About" data-cn="关于我们">About</a></li>
       <li><a href="#contact" data-en="Contact" data-cn="联系我们">Contact</a></li>
     </ul>
@@ -1333,143 +885,32 @@
     </div>
   </section>
 
-  <!-- OFFERINGS -->
-  <section class="offerings section-pad" id="offerings">
+  <!-- FEATURED TOURS -->
+  <section class="featured-tours section-pad" id="tours">
     <div class="section-header reveal">
-      <p class="section-eyebrow" data-en="Featured Tour" data-cn="精选行程">Featured Tour</p>
-      <h2 class="section-title" data-en-html="2026 <em>Offerings</em>" data-cn-html="2026 <em>精选行程</em>">2026 <em>Offerings</em></h2>
+      <p class="section-eyebrow" data-en="Featured Tours" data-cn="精选旅程">Featured Tours</p>
+      <h2 class="section-title" data-en-html="2026 <em>Tours</em>" data-cn-html="2026 <em>精选旅程</em>">2026 <em>Tours</em></h2>
       <div class="section-divider"></div>
     </div>
 
-    <div class="offerings-grid">
-
-    <div class="offering-card reveal">
-      <div class="offering-header">
-        <span class="offering-badge" data-en="Early Bird Special" data-cn="早鸟优惠">Early Bird Special</span>
-        <h3 data-en-html="Japan <em>Cherry Blossom</em> Viewing Tour" data-cn-html="日本<em>樱花</em>赏花之旅">Japan <em>Cherry Blossom</em> Viewing Tour</h3>
-        <p class="offering-subtitle" data-en="A premium 8-day journey through Japan's most stunning cherry blossom spots — from Mount Fuji and Hakone hot springs to Kyoto temples and Nara's deer parks." data-cn="8天7夜日本顶级赏樱之旅——从富士山到箱根温泉，从京都寺庙到奈良小鹿，沉浸式体验日本春日之美。">A premium 8-day journey through Japan's most stunning cherry blossom spots — from Mount Fuji and Hakone hot springs to Kyoto temples and Nara's deer parks.</p>
+    <div class="featured-carousel reveal">
+      <button class="fc-arrow fc-prev" id="fcPrev" aria-label="Previous">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+      </button>
+      <div class="fc-viewport">
+        <div class="fc-track" id="featuredGrid"></div>
       </div>
-
-      <div class="offering-carousel" data-carousel>
-        <div class="carousel-track">
-          <div class="carousel-slide"><img src="japan-cherry-blossoms-temple.jpg" alt="Cherry blossoms at temple"></div>
-          <div class="carousel-slide"><img src="japan-mt-fuji-cherry-blossoms.jpg" alt="Mt Fuji with cherry blossoms"></div>
-          <div class="carousel-slide"><img src="japan-kyoto-temple.jpg" alt="Kyoto temple"></div>
-          <div class="carousel-slide"><img src="japan-cherry-blossom-river.jpg" alt="Cherry blossom river"></div>
-        </div>
-        <button class="carousel-btn prev" aria-label="Previous"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
-        <button class="carousel-btn next" aria-label="Next"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
-        <div class="carousel-dots"></div>
-      </div>
-
-      <div class="offering-highlights">
-        <div class="offering-stat">
-          <div class="offering-stat-number">8</div>
-          <div class="offering-stat-label" data-en="Days &amp; 7 Nights" data-cn="天7夜">Days &amp; 7 Nights</div>
-        </div>
-        <div class="offering-stat">
-          <div class="offering-stat-number">7</div>
-          <div class="offering-stat-label" data-en="Cities Visited" data-cn="座城市">Cities Visited</div>
-        </div>
-        <div class="offering-stat">
-          <div class="offering-stat-number">6</div>
-          <div class="offering-stat-label" data-en="Blossom Viewing Spots" data-cn="大赏樱景点">Blossom Viewing Spots</div>
-        </div>
-        <div class="offering-stat">
-          <div class="offering-stat-number">4-5</div>
-          <div class="offering-stat-label" data-en="Star Hotels" data-cn="星级酒店">Star Hotels</div>
-        </div>
-      </div>
-
-      <div class="offering-details">
-        <ul class="offering-features">
-          <li data-en="Tokyo, Yokohama, Kamakura, Hakone, Kyoto, Nara &amp; Osaka" data-cn="东京、横滨、�的仓、箱根、京都、奈良、大阪">Tokyo, Yokohama, Kamakura, Hakone, Kyoto, Nara &amp; Osaka</li>
-          <li data-en="Night cherry blossoms at Ueno Park, Mount Fuji sakura, Arashiyama train" data-cn="上野公园夜樱、富士山樱花、岚山观樱小火车">Night cherry blossoms at Ueno Park, Mount Fuji sakura, Arashiyama train</li>
-          <li data-en="Hakone hot springs &amp; Lake Ashi pirate ship cruise" data-cn="箱根温泉 &amp; 芦之湖海盗船游览">Hakone hot springs &amp; Lake Ashi pirate ship cruise</li>
-          <li data-en="Pufferfish cuisine, samurai hot pot &amp; onsen dinner" data-cn="河豚特色餐、武将锅 &amp; 温泉晚餐">Pufferfish cuisine, samurai hot pot &amp; onsen dinner</li>
-          <li data-en="Two-day in-depth Kyoto tour with exclusive cultural sites" data-cn="京都两日深度游，探索独家文化景点">Two-day in-depth Kyoto tour with exclusive cultural sites</li>
-          <li data-en="All-inclusive — no shopping stops, pure sightseeing" data-cn="全包价，无购物，纯观光旅游">All-inclusive — no shopping stops, pure sightseeing</li>
-        </ul>
-      </div>
-
-      <p class="offering-dates" data-en="March 29 – April 5, 2026 &nbsp;|&nbsp; Early bird discount ends January 31" data-cn="2026年3月29日 – 4月5日 &nbsp;|&nbsp; 早鸟优惠截止1月31日">March 29 – April 5, 2026 &nbsp;|&nbsp; Early bird discount ends January 31</p>
-
-      <div class="offering-footer">
-        <div class="offering-price">
-          <span class="offering-price-original" data-en="$2,999 / person" data-cn="$2,999 / 人">$2,999 / person</span>
-          <span class="offering-price-current">$2,199<span style="font-size:0.5em;font-family:var(--font-body);font-weight:400;color:var(--text-mid);"> / person</span></span>
-          <span class="offering-price-note" data-en="Save $800 per person &nbsp;·&nbsp; Single occupancy: $2,699" data-cn="每人立减$800 &nbsp;·&nbsp; 单人入住：$2,699">Save $800 per person &nbsp;·&nbsp; Single occupancy: $2,699</span>
-        </div>
-        <button onclick="document.getElementById('qrModal').style.display='flex'" class="offering-cta" data-en="Book Now" data-cn="立即预订">
-          Book Now
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-        </button>
-      </div>
+      <button class="fc-arrow fc-next" id="fcNext" aria-label="Next">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+      </button>
+      <div class="fc-dots" id="fcDots"></div>
     </div>
 
-    <div class="offering-card blue reveal">
-      <div class="offering-header">
-        <span class="offering-badge" data-en="Cruise Special" data-cn="邮轮特惠">Cruise Special</span>
-        <h3 data-en-html="Athens &amp; <em>Eastern Mediterranean</em> Cruise" data-cn-html="希腊<em>爱琴海</em>邮轮之旅">Athens &amp; <em>Eastern Mediterranean</em> Cruise</h3>
-        <p class="offering-subtitle" data-en="9 days and 8 nights aboard the Celebrity Infinity — sail the romantic Aegean islands including Santorini, Mykonos, Rhodes, and more." data-cn="乘坐名人无极号邮轮，9天8夜畅游浪漫爱琴海群岛——圣托里尼、米科诺斯、罗得岛等绝美目的地。">9 days and 8 nights aboard the Celebrity Infinity — sail the romantic Aegean islands including Santorini, Mykonos, Rhodes, and more.</p>
-      </div>
-
-      <div class="offering-carousel" data-carousel>
-        <div class="carousel-track">
-          <div class="carousel-slide"><img src="greece-santorini.jpg" alt="Santorini"></div>
-          <div class="carousel-slide"><img src="greece-mykonos.jpg" alt="Mykonos"></div>
-          <div class="carousel-slide"><img src="greece-mediterranean-sea.jpg" alt="Mediterranean Sea"></div>
-          <div class="carousel-slide"><img src="cruise-ship.jpg" alt="Cruise ship"></div>
-        </div>
-        <button class="carousel-btn prev" aria-label="Previous"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
-        <button class="carousel-btn next" aria-label="Next"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
-        <div class="carousel-dots"></div>
-      </div>
-
-      <div class="offering-highlights">
-        <div class="offering-stat">
-          <div class="offering-stat-number">9</div>
-          <div class="offering-stat-label" data-en="Days &amp; 8 Nights" data-cn="天8夜">Days &amp; 8 Nights</div>
-        </div>
-        <div class="offering-stat">
-          <div class="offering-stat-number">6</div>
-          <div class="offering-stat-label" data-en="Ports of Call" data-cn="停靠港口">Ports of Call</div>
-        </div>
-        <div class="offering-stat">
-          <div class="offering-stat-number">90K</div>
-          <div class="offering-stat-label" data-en="Ton Luxury Ship" data-cn="吨豪华邮轮">Ton Luxury Ship</div>
-        </div>
-        <div class="offering-stat">
-          <div class="offering-stat-number">5</div>
-          <div class="offering-stat-label" data-en="Greek Islands" data-cn="座希腊岛屿">Greek Islands</div>
-        </div>
-      </div>
-
-      <div class="offering-details">
-        <ul class="offering-features">
-          <li data-en="Celebrity Cruises — Celebrity Infinity (90,940 tons)" data-cn="名人邮轮——名人无极号（90,940吨）">Celebrity Cruises — Celebrity Infinity (90,940 tons)</li>
-          <li data-en="Athens, Kusadasi (Turkey), Santorini, Rhodes, Mykonos &amp; Thessaloniki" data-cn="雅典、库萨达斯（土耳其）、圣托里尼、罗得岛、米科诺斯、塞萨洛尼基">Athens, Kusadasi (Turkey), Santorini, Rhodes, Mykonos &amp; Thessaloniki</li>
-          <li data-en="Round-trip from Athens (Piraeus), Greece" data-cn="希腊雅典（比雷埃夫斯）往返">Round-trip from Athens (Piraeus), Greece</li>
-          <li data-en="World-class dining, entertainment &amp; onboard amenities" data-cn="世界级餐饮、娱乐及船上设施">World-class dining, entertainment &amp; onboard amenities</li>
-          <li data-en="Premium guided tours with top-rated tour guides" data-cn="金牌导游带队，优质导览服务">Premium guided tours with top-rated tour guides</li>
-          <li data-en="All prices in USD, tax included" data-cn="所有价格均为美金含税价">All prices in USD, tax included</li>
-        </ul>
-      </div>
-
-      <p class="offering-dates" data-en="Departure: August 30, 2026 &nbsp;|&nbsp; Group Code: CIAEM8" data-cn="出发日期：2026年8月30日 &nbsp;|&nbsp; 团号：CIAEM8">Departure: August 30, 2026 &nbsp;|&nbsp; Group Code: CIAEM8</p>
-
-      <div class="offering-footer">
-        <div class="offering-price">
-          <span class="offering-price-current">$2,287<span style="font-size:0.5em;font-family:var(--font-body);font-weight:400;color:var(--text-mid);"> / room</span></span>
-          <span class="offering-price-note" data-en="Interior cabin (2 guests) &nbsp;·&nbsp; Balcony from $3,059/room" data-cn="两人内舱起 &nbsp;·&nbsp; 两人阳台从 $3,059/房起">Interior cabin (2 guests) &nbsp;·&nbsp; Balcony from $3,059/room</span>
-        </div>
-        <button onclick="document.getElementById('qrModal').style.display='flex'" class="offering-cta" data-en="Book Now" data-cn="立即预订">
-          Book Now
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-        </button>
-      </div>
-    </div>
-
+    <div style="text-align:center;margin-top:3rem;" class="reveal">
+      <a href="/tours" class="view-all-btn" data-en="View All Tours" data-cn="查看所有旅程">
+        View All Tours
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </a>
     </div>
   </section>
 
@@ -1579,93 +1020,17 @@
   <footer>
     <div class="footer-logo"><span>Elite</span> Travel</div>
     <p class="footer-copy" data-en="&copy; 2026 Elite Travel. All rights reserved." data-cn="&copy; 2026 佳音旅行。保留所有权利。">&copy; 2026 Elite Travel. All rights reserved.</p>
+    <a href="/admin" class="footer-admin">Admin</a>
   </footer>
 
+  <script src="/js/shared.js"></script>
   <script>
-    // Nav scroll effect
-    const nav = document.getElementById('nav');
-    window.addEventListener('scroll', () => {
-      nav.classList.toggle('scrolled', window.scrollY > 60);
-    });
-
-    // Mobile menu toggle
-    const navToggle = document.getElementById('navToggle');
-    const navLinks = document.getElementById('navLinks');
-    navToggle.addEventListener('click', () => {
-      navLinks.classList.toggle('open');
-    });
-
-    navLinks.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => navLinks.classList.remove('open'));
-    });
-
-    // Scroll reveal
-    const reveals = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
-
-    reveals.forEach(el => observer.observe(el));
-
-    // Language toggle
-    let currentLang = localStorage.getItem('eliteLang') || 'en';
-    const langBtns = document.querySelectorAll('.lang-btn');
-
-    function setLanguage(lang) {
-      currentLang = lang;
-      localStorage.setItem('eliteLang', lang);
-
-      langBtns.forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.lang === lang);
-      });
-
+    // Page-specific title update
+    window.eliteLangCallbacks.push(lang => {
       document.title = lang === 'cn'
         ? '佳音旅行 | 您的旅程从这里开始'
         : 'Elite Travel | Your Journey Begins Here';
-
-      // Plain text elements
-      document.querySelectorAll('[data-en]').forEach(el => {
-        const text = el.getAttribute('data-' + lang);
-        if (text) {
-          const svg = el.querySelector('svg');
-          if (svg) {
-            el.childNodes.forEach(node => {
-              if (node.nodeType === 3) node.textContent = '';
-            });
-            el.insertBefore(document.createTextNode(text + ' '), svg);
-            const nodes = Array.from(el.childNodes);
-            let foundText = false;
-            nodes.forEach(node => {
-              if (node.nodeType === 3 && node.textContent.trim()) {
-                if (foundText) node.remove();
-                foundText = true;
-              }
-            });
-          } else {
-            el.textContent = text;
-          }
-        }
-      });
-
-      // HTML elements
-      document.querySelectorAll('[data-en-html]').forEach(el => {
-        const html = el.getAttribute('data-' + lang + '-html');
-        if (html) el.innerHTML = html;
-      });
-
-    }
-
-    langBtns.forEach(btn => {
-      btn.addEventListener('click', () => setLanguage(btn.dataset.lang));
     });
-
-    if (currentLang !== 'en') {
-      setLanguage(currentLang);
-    }
 
     // Flight path animation
     (function() {
@@ -1828,41 +1193,119 @@
       });
     })();
 
-    // Carousels
-    document.querySelectorAll('[data-carousel]').forEach(carousel => {
-      const track = carousel.querySelector('.carousel-track');
-      const slides = carousel.querySelectorAll('.carousel-slide');
-      const dotsContainer = carousel.querySelector('.carousel-dots');
-      const prevBtn = carousel.querySelector('.prev');
-      const nextBtn = carousel.querySelector('.next');
-      let current = 0;
-      let autoInterval;
+    // Featured Tours from Supabase
+    const SUPABASE_URL = 'https://fttifyfyruuhqfapjayb.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ0dGlmeWZ5cnV1aHFmYXBqYXliIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIyNjM2NzUsImV4cCI6MjA4NzgzOTY3NX0.QuHrjsF6Xbcl2xA6H9IW6cnGk2JXMRDUK82q9_BIML4';
 
-      slides.forEach((_, i) => {
+    let featuredTours = [];
+
+    async function fetchFeaturedTours() {
+      try {
+        const res = await fetch(
+          SUPABASE_URL + '/rest/v1/tours?status=eq.live&featured=eq.true&order=created_at.desc&limit=6',
+          { headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': 'Bearer ' + SUPABASE_ANON_KEY } }
+        );
+        featuredTours = await res.json();
+        renderFeaturedTours();
+      } catch (e) {
+        console.error('Failed to fetch tours:', e);
+      }
+    }
+
+    let fcPage = 0;
+
+    function getPerPage() {
+      if (window.innerWidth <= 600) return 1;
+      if (window.innerWidth <= 900) return 2;
+      return 3;
+    }
+
+    function renderFeaturedTours() {
+      const track = document.getElementById('featuredGrid');
+      if (!track) return;
+      const lang = window.currentLang || 'en';
+      const isZh = lang === 'cn';
+
+      if (!featuredTours.length) {
+        track.innerHTML = '<p style="text-align:center;color:var(--azure);width:100%;">No tours available yet.</p>';
+        return;
+      }
+
+      track.innerHTML = featuredTours.map(t => {
+        const title = (isZh && t.title_zh) ? t.title_zh : t.title;
+        const summary = (isZh && t.summary_zh) ? t.summary_zh : (t.summary || '');
+        const dest = (isZh && t.destination_zh) ? t.destination_zh : t.destination;
+        const cover = t.cover_image || 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=600&q=80';
+        const priceLabel = isZh ? '起' : 'From';
+        return `
+          <a href="/tour/${t.slug}" class="tour-card">
+            <div class="tour-card-img">
+              <img src="${cover}" alt="${title}" loading="lazy">
+              <span class="tour-card-dest">${dest}</span>
+            </div>
+            <div class="tour-card-body">
+              <h3 class="tour-card-title">${title}</h3>
+              <p class="tour-card-summary">${summary}</p>
+              <div class="tour-card-meta">
+                <span class="tour-card-duration">${t.duration}</span>
+                <span class="tour-card-price">${priceLabel} $${Number(t.price_from).toLocaleString()}</span>
+              </div>
+            </div>
+          </a>`;
+      }).join('');
+
+      fcPage = 0;
+      updateCarousel();
+    }
+
+    function updateCarousel() {
+      const track = document.getElementById('featuredGrid');
+      const dotsEl = document.getElementById('fcDots');
+      const prevBtn = document.getElementById('fcPrev');
+      const nextBtn = document.getElementById('fcNext');
+      if (!track) return;
+
+      const perPage = getPerPage();
+      const total = featuredTours.length;
+      const pages = Math.ceil(total / perPage);
+
+      if (fcPage >= pages) fcPage = pages - 1;
+      if (fcPage < 0) fcPage = 0;
+
+      // Calculate offset: each card is (100% - gaps) / perPage wide, plus gap
+      const gapRem = 2;
+      const cardPercent = (100 - gapRem * (perPage - 1) * (100 / track.parentElement.offsetWidth)) / perPage;
+      // Simpler: shift by page * perPage cards worth
+      const cardWidth = track.children[0] ? track.children[0].offsetWidth : 0;
+      const gap = parseFloat(getComputedStyle(track).gap) || 0;
+      const offset = fcPage * perPage * (cardWidth + gap);
+      track.style.transform = `translateX(-${offset}px)`;
+
+      prevBtn.disabled = fcPage === 0;
+      nextBtn.disabled = fcPage >= pages - 1;
+
+      // Dots
+      dotsEl.innerHTML = '';
+      for (let i = 0; i < pages; i++) {
         const dot = document.createElement('button');
-        dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
-        dot.addEventListener('click', () => goTo(i));
-        dotsContainer.appendChild(dot);
-      });
-
-      function goTo(index) {
-        current = (index + slides.length) % slides.length;
-        track.style.transform = 'translateX(-' + (current * 100) + '%)';
-        dotsContainer.querySelectorAll('.carousel-dot').forEach((d, i) => {
-          d.classList.toggle('active', i === current);
-        });
+        dot.className = 'fc-dot' + (i === fcPage ? ' active' : '');
+        dot.addEventListener('click', () => { fcPage = i; updateCarousel(); });
+        dotsEl.appendChild(dot);
       }
 
-      prevBtn.addEventListener('click', () => { goTo(current - 1); resetAuto(); });
-      nextBtn.addEventListener('click', () => { goTo(current + 1); resetAuto(); });
+      // Hide dots if only 1 page
+      dotsEl.style.display = pages <= 1 ? 'none' : 'flex';
+    }
 
-      function resetAuto() {
-        clearInterval(autoInterval);
-        autoInterval = setInterval(() => goTo(current + 1), 5000);
-      }
+    document.getElementById('fcPrev').addEventListener('click', () => { fcPage--; updateCarousel(); });
+    document.getElementById('fcNext').addEventListener('click', () => { fcPage++; updateCarousel(); });
+    window.addEventListener('resize', updateCarousel);
 
-      autoInterval = setInterval(() => goTo(current + 1), 5000);
-    });
+    // Re-render on language switch
+    window.eliteLangCallbacks = window.eliteLangCallbacks || [];
+    window.eliteLangCallbacks.push(renderFeaturedTours);
+
+    fetchFeaturedTours();
   </script>
 
 </body>

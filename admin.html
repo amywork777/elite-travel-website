@@ -1,0 +1,1328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin | Elite Travel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/shared.css">
+  <style>
+    body { background: var(--pearl); }
+
+    /* Login overlay */
+    .login-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 300;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--pearl);
+    }
+
+    .login-card {
+      background: var(--white);
+      border-radius: 20px;
+      padding: 3rem 2.5rem;
+      max-width: 380px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(10, 37, 64, 0.08);
+    }
+
+    .login-card h2 {
+      font-family: var(--font-display);
+      font-size: 1.75rem;
+      font-weight: 400;
+      color: var(--deep-ocean);
+      margin-bottom: 0.5rem;
+    }
+
+    .login-card p {
+      font-size: 0.85rem;
+      color: var(--text-mid);
+      margin-bottom: 2rem;
+    }
+
+    .login-input {
+      width: 100%;
+      padding: 0.85rem 1.25rem;
+      border: 1px solid rgba(10, 37, 64, 0.1);
+      border-radius: 12px;
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.3s;
+      margin-bottom: 1rem;
+    }
+
+    .login-input:focus { border-color: var(--azure); }
+
+    .login-btn {
+      width: 100%;
+      padding: 0.85rem;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--sky), var(--azure));
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .login-btn:hover { box-shadow: 0 8px 24px rgba(26, 127, 181, 0.3); }
+
+    .login-error {
+      color: #e87da0;
+      font-size: 0.8rem;
+      margin-top: 0.75rem;
+      display: none;
+    }
+
+    /* Admin layout */
+    .admin-wrap {
+      display: none;
+      padding-top: 80px;
+    }
+
+    .admin-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 3rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .admin-topbar h1 {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 400;
+      color: var(--deep-ocean);
+    }
+
+    .admin-actions {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .admin-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: var(--font-body);
+      font-size: 0.78rem;
+      font-weight: 500;
+      padding: 0.65rem 1.25rem;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .admin-btn-primary {
+      background: linear-gradient(135deg, var(--sky), var(--azure));
+      color: var(--white);
+    }
+
+    .admin-btn-primary:hover { box-shadow: 0 6px 20px rgba(26, 127, 181, 0.25); }
+
+    .admin-btn-secondary {
+      background: var(--white);
+      color: var(--text-mid);
+      border: 1px solid rgba(10, 37, 64, 0.1);
+    }
+
+    .admin-btn-secondary:hover { border-color: var(--azure); color: var(--azure); }
+
+    .admin-btn-danger {
+      background: #fff5f5;
+      color: #d4649a;
+      border: 1px solid rgba(212, 100, 154, 0.2);
+    }
+
+    .admin-btn-danger:hover { background: #d4649a; color: var(--white); }
+
+    /* Tour cards grid */
+    .admin-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+      padding: 0 3rem 3rem;
+    }
+
+    .admin-card {
+      background: var(--white);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(10, 37, 64, 0.04);
+      transition: all 0.3s;
+    }
+
+    .admin-card:hover {
+      box-shadow: 0 12px 40px rgba(10, 37, 64, 0.08);
+    }
+
+    .admin-card-img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      background: var(--pearl);
+    }
+
+    .admin-card-body {
+      padding: 1.25rem 1.5rem;
+    }
+
+    .admin-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 0.5rem;
+    }
+
+    .admin-card-title {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 500;
+      color: var(--deep-ocean);
+      flex: 1;
+    }
+
+    .admin-card-badges {
+      display: flex;
+      gap: 0.35rem;
+      flex-shrink: 0;
+      margin-left: 0.5rem;
+    }
+
+    .badge {
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.6rem;
+      border-radius: 6px;
+    }
+
+    .badge-live { background: #e6f9f0; color: #0d9d5c; }
+    .badge-draft { background: #fef5e7; color: #c9a84c; }
+    .badge-featured { background: #fff5f5; color: #e87da0; }
+
+    .admin-card-price {
+      font-size: 0.85rem;
+      color: var(--text-mid);
+      margin-bottom: 0.75rem;
+    }
+
+    .admin-card-actions {
+      display: flex;
+      gap: 0.5rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid rgba(10, 37, 64, 0.05);
+    }
+
+    /* Edit modal / form */
+    .edit-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 250;
+      background: rgba(10, 37, 64, 0.4);
+      backdrop-filter: blur(4px);
+      overflow-y: auto;
+      padding: 2rem;
+    }
+
+    .edit-panel {
+      background: var(--white);
+      border-radius: 20px;
+      max-width: 800px;
+      margin: 0 auto;
+      box-shadow: 0 30px 80px rgba(10, 37, 64, 0.15);
+    }
+
+    .edit-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 2rem;
+      border-bottom: 1px solid rgba(10, 37, 64, 0.06);
+    }
+
+    .edit-header h2 {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: var(--deep-ocean);
+    }
+
+    .edit-close {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--text-light);
+      padding: 0.25rem;
+    }
+
+    .edit-close:hover { color: var(--deep-ocean); }
+
+    /* Tabs */
+    .edit-tabs {
+      display: flex;
+      gap: 0;
+      border-bottom: 1px solid rgba(10, 37, 64, 0.06);
+      padding: 0 2rem;
+      overflow-x: auto;
+    }
+
+    .edit-tab {
+      font-family: var(--font-body);
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      padding: 1rem 1.25rem;
+      border: none;
+      background: none;
+      color: var(--text-light);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: all 0.3s;
+      white-space: nowrap;
+    }
+
+    .edit-tab.active {
+      color: var(--azure);
+      border-bottom-color: var(--azure);
+    }
+
+    .edit-tab:hover { color: var(--deep-ocean); }
+
+    .edit-tab-content {
+      display: none;
+      padding: 2rem;
+    }
+
+    .edit-tab-content.active { display: block; }
+
+    /* Form elements */
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .form-row.full { grid-template-columns: 1fr; }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .form-label {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-light);
+    }
+
+    .form-input, .form-select {
+      padding: 0.7rem 1rem;
+      border: 1px solid rgba(10, 37, 64, 0.1);
+      border-radius: 10px;
+      font-family: var(--font-body);
+      font-size: 0.88rem;
+      color: var(--text-dark);
+      outline: none;
+      transition: border-color 0.3s;
+    }
+
+    .form-input:focus, .form-select:focus { border-color: var(--azure); }
+
+    .form-textarea {
+      padding: 0.7rem 1rem;
+      border: 1px solid rgba(10, 37, 64, 0.1);
+      border-radius: 10px;
+      font-family: var(--font-body);
+      font-size: 0.88rem;
+      color: var(--text-dark);
+      outline: none;
+      transition: border-color 0.3s;
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .form-textarea:focus { border-color: var(--azure); }
+
+    .form-textarea.tall { min-height: 200px; }
+
+    .form-hint {
+      font-size: 0.7rem;
+      color: var(--text-light);
+      margin-top: 0.15rem;
+    }
+
+    .form-toggle {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .toggle-switch {
+      position: relative;
+      width: 44px;
+      height: 24px;
+    }
+
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .toggle-slider {
+      position: absolute;
+      inset: 0;
+      background: rgba(10, 37, 64, 0.1);
+      border-radius: 24px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .toggle-slider::before {
+      content: '';
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--white);
+      left: 3px;
+      top: 3px;
+      transition: all 0.3s;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+    }
+
+    .toggle-switch input:checked + .toggle-slider {
+      background: var(--azure);
+    }
+
+    .toggle-switch input:checked + .toggle-slider::before {
+      transform: translateX(20px);
+    }
+
+    .toggle-label {
+      font-size: 0.85rem;
+      color: var(--text-mid);
+    }
+
+    .form-check {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .form-check input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--azure);
+    }
+
+    .form-check label {
+      font-size: 0.85rem;
+      color: var(--text-mid);
+    }
+
+    /* Image upload */
+    .image-upload-area {
+      border: 2px dashed rgba(10, 37, 64, 0.1);
+      border-radius: 12px;
+      padding: 1.5rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .image-upload-area:hover {
+      border-color: var(--azure);
+      background: rgba(26, 127, 181, 0.03);
+    }
+
+    .image-upload-area p {
+      font-size: 0.82rem;
+      color: var(--text-light);
+    }
+
+    .image-preview {
+      width: 100%;
+      max-height: 200px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-top: 0.75rem;
+    }
+
+    .gallery-previews {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-top: 0.75rem;
+    }
+
+    .gallery-thumb {
+      width: 80px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 8px;
+      position: relative;
+    }
+
+    .gallery-thumb-wrap {
+      position: relative;
+      display: inline-block;
+    }
+
+    .gallery-thumb-remove {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #d4649a;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Edit footer */
+    .edit-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.75rem;
+      padding: 1.5rem 2rem;
+      border-top: 1px solid rgba(10, 37, 64, 0.06);
+    }
+
+    /* CSV import modal */
+    .csv-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 260;
+      background: rgba(10, 37, 64, 0.4);
+      backdrop-filter: blur(4px);
+      overflow-y: auto;
+      padding: 2rem;
+    }
+
+    .csv-panel {
+      background: var(--white);
+      border-radius: 20px;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2rem;
+      box-shadow: 0 30px 80px rgba(10, 37, 64, 0.15);
+    }
+
+    .csv-panel h2 {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: var(--deep-ocean);
+      margin-bottom: 1rem;
+    }
+
+    .csv-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.8rem;
+      margin: 1rem 0;
+    }
+
+    .csv-table th {
+      background: var(--pearl);
+      padding: 0.6rem 0.75rem;
+      text-align: left;
+      font-weight: 500;
+      color: var(--text-mid);
+      font-size: 0.7rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .csv-table td {
+      padding: 0.5rem 0.75rem;
+      border-bottom: 1px solid rgba(10, 37, 64, 0.05);
+      color: var(--text-dark);
+      max-width: 200px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      padding: 0.85rem 1.5rem;
+      border-radius: 12px;
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      font-weight: 500;
+      z-index: 400;
+      animation: fadeUp 0.3s ease;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    .toast-success { background: #0d9d5c; color: white; }
+    .toast-error { background: #d4649a; color: white; }
+
+    @media (max-width: 700px) {
+      .admin-topbar { padding: 1rem 1.5rem; }
+      .admin-grid { padding: 0 1.5rem 2rem; grid-template-columns: 1fr; }
+      .edit-panel { margin: 0; }
+      .form-row { grid-template-columns: 1fr; }
+      .edit-tabs { padding: 0 1rem; }
+      .edit-tab { padding: 0.75rem 0.75rem; font-size: 0.7rem; }
+    }
+  </style>
+</head>
+<body data-inner-page="true">
+
+  <!-- NAV -->
+  <nav id="nav" class="scrolled">
+    <a href="/" class="nav-logo"><span>Elite</span> Travel</a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="/#services" data-en="Services" data-cn="服务项目">Services</a></li>
+      <li><a href="/tours" data-en="Tours" data-cn="精选旅程">Tours</a></li>
+      <li><a href="/#about" data-en="About" data-cn="关于我们">About</a></li>
+      <li><a href="/#contact" data-en="Contact" data-cn="联系我们">Contact</a></li>
+    </ul>
+    <div style="display:flex;align-items:center;">
+      <div class="lang-toggle" id="langToggle">
+        <button class="lang-btn active" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="cn">中文</button>
+      </div>
+      <button class="nav-toggle" id="navToggle" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- LOGIN -->
+  <div class="login-overlay" id="loginOverlay">
+    <div class="login-card">
+      <h2>Admin Login</h2>
+      <p>Enter the admin password to continue</p>
+      <input type="password" class="login-input" id="loginPassword" placeholder="Password" autocomplete="current-password">
+      <button class="login-btn" id="loginBtn">Sign In</button>
+      <p class="login-error" id="loginError">Invalid password. Please try again.</p>
+    </div>
+  </div>
+
+  <!-- ADMIN DASHBOARD -->
+  <div class="admin-wrap" id="adminWrap">
+    <div class="admin-topbar">
+      <h1>Tours Dashboard</h1>
+      <div class="admin-actions">
+        <button class="admin-btn admin-btn-primary" onclick="openEditor()">+ Add New Tour</button>
+        <button class="admin-btn admin-btn-secondary" onclick="openCSVImport()">Import CSV</button>
+      </div>
+    </div>
+    <div class="admin-grid" id="adminGrid">
+      <p style="color:var(--text-light);grid-column:1/-1;text-align:center;padding:3rem;">Loading tours...</p>
+    </div>
+  </div>
+
+  <!-- EDIT MODAL -->
+  <div class="edit-overlay" id="editOverlay">
+    <div class="edit-panel">
+      <div class="edit-header">
+        <h2 id="editTitle">Add New Tour</h2>
+        <button class="edit-close" onclick="closeEditor()">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+      </div>
+
+      <div class="edit-tabs">
+        <button class="edit-tab active" data-tab="basics">Basics</button>
+        <button class="edit-tab" data-tab="details">Details</button>
+        <button class="edit-tab" data-tab="itinerary">Itinerary</button>
+        <button class="edit-tab" data-tab="includes">Incl / Excl</button>
+        <button class="edit-tab" data-tab="settings">Settings</button>
+      </div>
+
+      <!-- Tab 1: Basics -->
+      <div class="edit-tab-content active" data-tab-content="basics">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Title (EN)</label>
+            <input class="form-input" id="f-title" placeholder="e.g. Japan Cherry Blossom Tour">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Title (中文)</label>
+            <input class="form-input" id="f-title_zh" placeholder="e.g. 日本樱花赏花之旅">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Slug</label>
+            <input class="form-input" id="f-slug" placeholder="japan-cherry-blossom">
+            <span class="form-hint">Auto-generated from title. Used in URL: /tour/slug</span>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Duration</label>
+            <input class="form-input" id="f-duration" placeholder="e.g. 8 Days / 7 Nights">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Destination (EN)</label>
+            <input class="form-input" id="f-destination" placeholder="e.g. Japan">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Destination (中文)</label>
+            <input class="form-input" id="f-destination_zh" placeholder="e.g. 日本">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Price From</label>
+            <input class="form-input" id="f-price_from" type="number" step="0.01" placeholder="2199.00">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Currency</label>
+            <select class="form-select" id="f-currency">
+              <option value="USD">USD ($)</option>
+              <option value="EUR">EUR (€)</option>
+              <option value="CNY">CNY (¥)</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Dates (EN)</label>
+            <input class="form-input" id="f-dates" placeholder="e.g. March 29 – April 5, 2026">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Dates (中文)</label>
+            <input class="form-input" id="f-dates_zh" placeholder="e.g. 2026年3月29日 – 4月5日">
+          </div>
+        </div>
+        <div class="form-row full">
+          <div class="form-group">
+            <label class="form-label">Cover Image</label>
+            <div class="image-upload-area" id="coverUploadArea" onclick="document.getElementById('coverFileInput').click()">
+              <p>Click to upload cover image (or drag & drop)</p>
+              <input type="file" id="coverFileInput" accept="image/*" style="display:none">
+            </div>
+            <img class="image-preview" id="coverPreview" style="display:none">
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 2: Details -->
+      <div class="edit-tab-content" data-tab-content="details">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Summary (EN)</label>
+            <textarea class="form-textarea" id="f-summary" placeholder="Short description for tour cards..."></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Summary (中文)</label>
+            <textarea class="form-textarea" id="f-summary_zh" placeholder="卡片上显示的简短描述..."></textarea>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Full Description (EN)</label>
+            <textarea class="form-textarea tall" id="f-description" placeholder="Detailed tour description..."></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Full Description (中文)</label>
+            <textarea class="form-textarea tall" id="f-description_zh" placeholder="详细行程介绍..."></textarea>
+          </div>
+        </div>
+        <div class="form-row full">
+          <div class="form-group">
+            <label class="form-label">Gallery Images</label>
+            <div class="image-upload-area" onclick="document.getElementById('galleryFileInput').click()">
+              <p>Click to upload gallery images (multiple)</p>
+              <input type="file" id="galleryFileInput" accept="image/*" multiple style="display:none">
+            </div>
+            <div class="gallery-previews" id="galleryPreviews"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 3: Itinerary -->
+      <div class="edit-tab-content" data-tab-content="itinerary">
+        <div class="form-row full">
+          <div class="form-group">
+            <label class="form-label">Itinerary (EN)</label>
+            <textarea class="form-textarea tall" id="f-itinerary" placeholder="Day 1: Arrive in Tokyo...&#10;Day 2: Mt Fuji excursion...&#10;&#10;Type freely — day-by-day, bullet points, paragraphs. It will be displayed as-is."></textarea>
+            <span class="form-hint">Free-form text. Line breaks are preserved.</span>
+          </div>
+        </div>
+        <div class="form-row full">
+          <div class="form-group">
+            <label class="form-label">Itinerary (中文)</label>
+            <textarea class="form-textarea tall" id="f-itinerary_zh" placeholder="第1天：抵达东京...&#10;第2天：富士山一日游..."></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 4: Includes/Excludes -->
+      <div class="edit-tab-content" data-tab-content="includes">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Includes (EN) — one per line</label>
+            <textarea class="form-textarea" id="f-includes" placeholder="Round-trip flights&#10;4-5 star hotel accommodation&#10;All meals included"></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Includes (中文) — one per line</label>
+            <textarea class="form-textarea" id="f-includes_zh" placeholder="往返机票&#10;4-5星酒店住宿&#10;全程含餐"></textarea>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Excludes (EN) — one per line</label>
+            <textarea class="form-textarea" id="f-excludes" placeholder="Travel insurance&#10;Personal expenses&#10;Tips"></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Excludes (中文) — one per line</label>
+            <textarea class="form-textarea" id="f-excludes_zh" placeholder="旅行保险&#10;个人消费&#10;小费"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 5: Settings -->
+      <div class="edit-tab-content" data-tab-content="settings">
+        <div class="form-row full">
+          <div class="form-group">
+            <label class="form-label">Status</label>
+            <div class="form-toggle" style="margin-top:0.5rem;">
+              <label class="toggle-switch">
+                <input type="checkbox" id="f-status">
+                <span class="toggle-slider"></span>
+              </label>
+              <span class="toggle-label" id="statusLabel">Draft</span>
+            </div>
+          </div>
+        </div>
+        <div class="form-row full" style="margin-top:1rem;">
+          <div class="form-group">
+            <div class="form-check">
+              <input type="checkbox" id="f-featured">
+              <label for="f-featured">Featured tour (appears first in listing)</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="edit-footer">
+        <button class="admin-btn admin-btn-secondary" onclick="closeEditor()">Cancel</button>
+        <button class="admin-btn admin-btn-primary" id="saveBtn" onclick="saveTour()">Save Tour</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CSV IMPORT MODAL -->
+  <div class="csv-overlay" id="csvOverlay">
+    <div class="csv-panel">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
+        <h2>Import Tours from CSV</h2>
+        <button class="edit-close" onclick="closeCSVImport()">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+      </div>
+      <p style="font-size:0.85rem;color:var(--text-mid);margin-bottom:1rem;">Upload a CSV file with columns: title, slug, destination, duration, price_from, summary, status. Optional columns: title_zh, destination_zh, summary_zh, currency, description, description_zh, etc.</p>
+      <div class="image-upload-area" onclick="document.getElementById('csvFileInput').click()">
+        <p>Click to select CSV file</p>
+        <input type="file" id="csvFileInput" accept=".csv" style="display:none">
+      </div>
+      <div id="csvPreview" style="margin-top:1rem;overflow-x:auto;"></div>
+      <div style="display:flex;justify-content:flex-end;gap:0.75rem;margin-top:1rem;">
+        <button class="admin-btn admin-btn-secondary" onclick="closeCSVImport()">Cancel</button>
+        <button class="admin-btn admin-btn-primary" id="csvImportBtn" onclick="importCSV()" style="display:none">Import All</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo"><span>Elite</span> Travel</div>
+    <p class="footer-copy">&copy; 2026 Elite Travel. All rights reserved.</p>
+    <a href="/admin" class="footer-admin">Admin</a>
+  </footer>
+
+  <script src="/js/shared.js"></script>
+  <script>
+    // ===== CONFIG =====
+    // TODO: Replace with your Supabase project values
+    const SUPABASE_URL = 'https://fttifyfyruuhqfapjayb.supabase.co';
+    const EDGE_FUNCTION_URL = SUPABASE_URL + '/functions/v1/admin-api';
+
+    let password = sessionStorage.getItem('adminPass') || '';
+    let allTours = [];
+    let editingTourId = null;
+    let coverImageUrl = '';
+    let galleryUrls = [];
+
+    // ===== AUTH =====
+    const loginOverlay = document.getElementById('loginOverlay');
+    const adminWrap = document.getElementById('adminWrap');
+
+    if (password) {
+      tryAuth();
+    }
+
+    document.getElementById('loginBtn').addEventListener('click', doLogin);
+    document.getElementById('loginPassword').addEventListener('keydown', e => {
+      if (e.key === 'Enter') doLogin();
+    });
+
+    async function doLogin() {
+      password = document.getElementById('loginPassword').value;
+      if (!password) return;
+      await tryAuth();
+    }
+
+    async function tryAuth() {
+      try {
+        const res = await adminAPI('list_all', {});
+        if (res.error) throw new Error(res.error);
+        sessionStorage.setItem('adminPass', password);
+        loginOverlay.style.display = 'none';
+        adminWrap.style.display = 'block';
+        allTours = res.tours || [];
+        renderAdminGrid();
+      } catch (err) {
+        document.getElementById('loginError').style.display = 'block';
+        sessionStorage.removeItem('adminPass');
+      }
+    }
+
+    async function adminAPI(action, data) {
+      const res = await fetch(EDGE_FUNCTION_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password, action, data })
+      });
+      return res.json();
+    }
+
+    // ===== DASHBOARD =====
+    function renderAdminGrid() {
+      const grid = document.getElementById('adminGrid');
+      if (allTours.length === 0) {
+        grid.innerHTML = '<p style="color:var(--text-light);grid-column:1/-1;text-align:center;padding:3rem;">No tours yet. Click "+ Add New Tour" to get started.</p>';
+        return;
+      }
+
+      grid.innerHTML = allTours.map(tour => {
+        const price = Number(tour.price_from).toLocaleString();
+        const curr = tour.currency === 'USD' ? '$' : tour.currency;
+        return `
+          <div class="admin-card">
+            ${tour.cover_image
+              ? `<img src="${tour.cover_image}" alt="${tour.title}" class="admin-card-img">`
+              : '<div class="admin-card-img" style="display:flex;align-items:center;justify-content:center;color:var(--text-light);font-size:0.8rem;">No Image</div>'
+            }
+            <div class="admin-card-body">
+              <div class="admin-card-header">
+                <span class="admin-card-title">${tour.title}</span>
+                <div class="admin-card-badges">
+                  <span class="badge ${tour.status === 'live' ? 'badge-live' : 'badge-draft'}">${tour.status}</span>
+                  ${tour.featured ? '<span class="badge badge-featured">★</span>' : ''}
+                </div>
+              </div>
+              <div class="admin-card-price">${curr}${price} · ${tour.duration || ''}</div>
+              <div class="admin-card-actions">
+                <button class="admin-btn admin-btn-secondary" onclick="editTour('${tour.id}')" style="flex:1">Edit</button>
+                <button class="admin-btn admin-btn-danger" onclick="deleteTour('${tour.id}')" style="flex:0">Delete</button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // ===== EDITOR =====
+    const formFields = ['title', 'title_zh', 'slug', 'destination', 'destination_zh', 'duration',
+      'price_from', 'currency', 'dates', 'dates_zh', 'summary', 'summary_zh', 'description',
+      'description_zh', 'itinerary', 'itinerary_zh', 'includes', 'includes_zh', 'excludes', 'excludes_zh'];
+
+    // Tab switching
+    document.querySelectorAll('.edit-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.edit-tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.edit-tab-content').forEach(c => c.classList.remove('active'));
+        tab.classList.add('active');
+        document.querySelector(`[data-tab-content="${tab.dataset.tab}"]`).classList.add('active');
+      });
+    });
+
+    // Status toggle label
+    document.getElementById('f-status').addEventListener('change', e => {
+      document.getElementById('statusLabel').textContent = e.target.checked ? 'Live' : 'Draft';
+    });
+
+    // Auto-generate slug from title
+    document.getElementById('f-title').addEventListener('input', e => {
+      if (!editingTourId) {
+        document.getElementById('f-slug').value = slugify(e.target.value);
+      }
+    });
+
+    function slugify(text) {
+      return text.toLowerCase().trim()
+        .replace(/[^\w\s-]/g, '')
+        .replace(/[\s_]+/g, '-')
+        .replace(/-+/g, '-')
+        .replace(/^-|-$/g, '');
+    }
+
+    function openEditor(tourId) {
+      editingTourId = tourId || null;
+      coverImageUrl = '';
+      galleryUrls = [];
+      document.getElementById('coverPreview').style.display = 'none';
+      document.getElementById('galleryPreviews').innerHTML = '';
+
+      // Reset to first tab
+      document.querySelectorAll('.edit-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.edit-tab-content').forEach(c => c.classList.remove('active'));
+      document.querySelector('[data-tab="basics"]').classList.add('active');
+      document.querySelector('[data-tab-content="basics"]').classList.add('active');
+
+      if (tourId) {
+        document.getElementById('editTitle').textContent = 'Edit Tour';
+        const tour = allTours.find(t => t.id === tourId);
+        if (!tour) return;
+
+        formFields.forEach(field => {
+          const el = document.getElementById('f-' + field);
+          if (el) {
+            if (el.tagName === 'SELECT') el.value = tour[field] || 'USD';
+            else el.value = tour[field] || '';
+          }
+        });
+
+        document.getElementById('f-status').checked = tour.status === 'live';
+        document.getElementById('statusLabel').textContent = tour.status === 'live' ? 'Live' : 'Draft';
+        document.getElementById('f-featured').checked = tour.featured;
+
+        if (tour.cover_image) {
+          coverImageUrl = tour.cover_image;
+          document.getElementById('coverPreview').src = tour.cover_image;
+          document.getElementById('coverPreview').style.display = 'block';
+        }
+
+        if (Array.isArray(tour.gallery) && tour.gallery.length > 0) {
+          galleryUrls = [...tour.gallery];
+          renderGalleryPreviews();
+        }
+      } else {
+        document.getElementById('editTitle').textContent = 'Add New Tour';
+        formFields.forEach(field => {
+          const el = document.getElementById('f-' + field);
+          if (el) {
+            if (el.tagName === 'SELECT') el.value = 'USD';
+            else el.value = '';
+          }
+        });
+        document.getElementById('f-status').checked = false;
+        document.getElementById('statusLabel').textContent = 'Draft';
+        document.getElementById('f-featured').checked = false;
+      }
+
+      document.getElementById('editOverlay').style.display = 'block';
+    }
+
+    function closeEditor() {
+      document.getElementById('editOverlay').style.display = 'none';
+      editingTourId = null;
+    }
+
+    function renderGalleryPreviews() {
+      const container = document.getElementById('galleryPreviews');
+      container.innerHTML = galleryUrls.map((url, i) => `
+        <div class="gallery-thumb-wrap">
+          <img src="${url}" class="gallery-thumb">
+          <button class="gallery-thumb-remove" onclick="removeGalleryImage(${i})">✕</button>
+        </div>
+      `).join('');
+    }
+
+    window.removeGalleryImage = function(index) {
+      galleryUrls.splice(index, 1);
+      renderGalleryPreviews();
+    };
+
+    // Image uploads
+    document.getElementById('coverFileInput').addEventListener('change', async e => {
+      const file = e.target.files[0];
+      if (!file) return;
+      showToast('Uploading cover image...', 'success');
+      const url = await uploadImage(file);
+      if (url) {
+        coverImageUrl = url;
+        document.getElementById('coverPreview').src = url;
+        document.getElementById('coverPreview').style.display = 'block';
+        showToast('Cover image uploaded!', 'success');
+      }
+    });
+
+    document.getElementById('galleryFileInput').addEventListener('change', async e => {
+      const files = Array.from(e.target.files);
+      if (!files.length) return;
+      showToast(`Uploading ${files.length} image(s)...`, 'success');
+      for (const file of files) {
+        const url = await uploadImage(file);
+        if (url) galleryUrls.push(url);
+      }
+      renderGalleryPreviews();
+      showToast('Gallery images uploaded!', 'success');
+    });
+
+    async function uploadImage(file) {
+      try {
+        const reader = new FileReader();
+        const base64 = await new Promise((resolve, reject) => {
+          reader.onload = () => resolve(reader.result.split(',')[1]);
+          reader.onerror = reject;
+          reader.readAsDataURL(file);
+        });
+
+        const res = await adminAPI('upload_image', {
+          fileBase64: base64,
+          fileName: file.name,
+          contentType: file.type,
+          tourId: editingTourId || 'new'
+        });
+
+        if (res.error) throw new Error(res.error);
+        return res.url;
+      } catch (err) {
+        showToast('Image upload failed: ' + err.message, 'error');
+        return null;
+      }
+    }
+
+    async function saveTour() {
+      const tour = {};
+      formFields.forEach(field => {
+        const el = document.getElementById('f-' + field);
+        if (el) {
+          const val = el.tagName === 'SELECT' ? el.value : el.value.trim();
+          if (val !== '') tour[field] = val;
+        }
+      });
+
+      // Convert price to number
+      if (tour.price_from) tour.price_from = parseFloat(tour.price_from);
+
+      tour.status = document.getElementById('f-status').checked ? 'live' : 'draft';
+      tour.featured = document.getElementById('f-featured').checked;
+      tour.cover_image = coverImageUrl || null;
+      tour.gallery = galleryUrls;
+
+      if (!tour.title || !tour.slug || !tour.destination || !tour.duration || !tour.price_from) {
+        showToast('Please fill in title, slug, destination, duration, and price.', 'error');
+        return;
+      }
+
+      document.getElementById('saveBtn').textContent = 'Saving...';
+
+      try {
+        let res;
+        if (editingTourId) {
+          res = await adminAPI('update', { id: editingTourId, tour });
+        } else {
+          res = await adminAPI('create', { tour });
+        }
+
+        if (res.error) throw new Error(res.error);
+
+        showToast(editingTourId ? 'Tour updated!' : 'Tour created!', 'success');
+        closeEditor();
+        await refreshTours();
+      } catch (err) {
+        showToast('Error: ' + err.message, 'error');
+      } finally {
+        document.getElementById('saveBtn').textContent = 'Save Tour';
+      }
+    }
+
+    window.editTour = function(id) { openEditor(id); };
+
+    window.deleteTour = async function(id) {
+      if (!confirm('Are you sure you want to delete this tour?')) return;
+      try {
+        const res = await adminAPI('delete', { id });
+        if (res.error) throw new Error(res.error);
+        showToast('Tour deleted.', 'success');
+        await refreshTours();
+      } catch (err) {
+        showToast('Error: ' + err.message, 'error');
+      }
+    };
+
+    async function refreshTours() {
+      const res = await adminAPI('list_all', {});
+      if (!res.error) {
+        allTours = res.tours || [];
+        renderAdminGrid();
+      }
+    }
+
+    // ===== CSV IMPORT =====
+    let csvRows = [];
+
+    function openCSVImport() {
+      csvRows = [];
+      document.getElementById('csvPreview').innerHTML = '';
+      document.getElementById('csvImportBtn').style.display = 'none';
+      document.getElementById('csvFileInput').value = '';
+      document.getElementById('csvOverlay').style.display = 'block';
+    }
+
+    function closeCSVImport() {
+      document.getElementById('csvOverlay').style.display = 'none';
+    }
+
+    document.getElementById('csvFileInput').addEventListener('change', e => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        const text = reader.result;
+        const lines = text.split('\n').filter(l => l.trim());
+        if (lines.length < 2) {
+          showToast('CSV must have a header row and at least one data row.', 'error');
+          return;
+        }
+
+        const headers = parseCSVLine(lines[0]);
+        csvRows = [];
+        for (let i = 1; i < lines.length; i++) {
+          const values = parseCSVLine(lines[i]);
+          const row = {};
+          headers.forEach((h, j) => { row[h.trim()] = (values[j] || '').trim(); });
+          if (row.title && row.slug) csvRows.push(row);
+        }
+
+        if (csvRows.length === 0) {
+          showToast('No valid rows found. Each row needs at least title and slug.', 'error');
+          return;
+        }
+
+        // Render preview table
+        const cols = headers.slice(0, 6);
+        let tableHTML = '<table class="csv-table"><thead><tr>';
+        cols.forEach(c => { tableHTML += `<th>${c.trim()}</th>`; });
+        tableHTML += '</tr></thead><tbody>';
+        csvRows.forEach(row => {
+          tableHTML += '<tr>';
+          cols.forEach(c => { tableHTML += `<td>${row[c.trim()] || ''}</td>`; });
+          tableHTML += '</tr>';
+        });
+        tableHTML += '</tbody></table>';
+        tableHTML += `<p style="font-size:0.82rem;color:var(--text-mid);">${csvRows.length} tour(s) ready to import</p>`;
+
+        document.getElementById('csvPreview').innerHTML = tableHTML;
+        document.getElementById('csvImportBtn').style.display = 'inline-flex';
+      };
+      reader.readAsText(file);
+    });
+
+    function parseCSVLine(line) {
+      const result = [];
+      let current = '';
+      let inQuotes = false;
+      for (let i = 0; i < line.length; i++) {
+        const ch = line[i];
+        if (ch === '"') {
+          inQuotes = !inQuotes;
+        } else if (ch === ',' && !inQuotes) {
+          result.push(current);
+          current = '';
+        } else {
+          current += ch;
+        }
+      }
+      result.push(current);
+      return result;
+    }
+
+    async function importCSV() {
+      if (csvRows.length === 0) return;
+
+      // Ensure required fields have defaults
+      const tours = csvRows.map(row => ({
+        title: row.title,
+        slug: row.slug,
+        destination: row.destination || 'Unknown',
+        duration: row.duration || 'TBD',
+        price_from: parseFloat(row.price_from) || 0,
+        currency: row.currency || 'USD',
+        status: row.status || 'draft',
+        featured: row.featured === 'true',
+        title_zh: row.title_zh || null,
+        destination_zh: row.destination_zh || null,
+        summary: row.summary || null,
+        summary_zh: row.summary_zh || null,
+        description: row.description || null,
+        description_zh: row.description_zh || null,
+        itinerary: row.itinerary || null,
+        itinerary_zh: row.itinerary_zh || null,
+        includes: row.includes || null,
+        includes_zh: row.includes_zh || null,
+        excludes: row.excludes || null,
+        excludes_zh: row.excludes_zh || null,
+        dates: row.dates || null,
+        dates_zh: row.dates_zh || null,
+      }));
+
+      document.getElementById('csvImportBtn').textContent = 'Importing...';
+
+      try {
+        const res = await adminAPI('bulk_create', { tours });
+        if (res.error) throw new Error(res.error);
+        showToast(`${tours.length} tour(s) imported!`, 'success');
+        closeCSVImport();
+        await refreshTours();
+      } catch (err) {
+        showToast('Import error: ' + err.message, 'error');
+      } finally {
+        document.getElementById('csvImportBtn').textContent = 'Import All';
+      }
+    }
+
+    // ===== TOAST =====
+    function showToast(message, type) {
+      const existing = document.querySelector('.toast');
+      if (existing) existing.remove();
+
+      const toast = document.createElement('div');
+      toast.className = `toast toast-${type}`;
+      toast.textContent = message;
+      document.body.appendChild(toast);
+      setTimeout(() => toast.remove(), 3500);
+    }
+  </script>
+</body>
+</html>
