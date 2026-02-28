@@ -1122,6 +1122,7 @@
               <div class="admin-card-price">${curr}${price} · ${tour.duration || ''}</div>
               <div class="admin-card-actions">
                 <button class="admin-btn admin-btn-secondary" onclick="editTour('${tour.id}')" style="flex:1">Edit</button>
+                <button class="admin-btn admin-btn-secondary" onclick="duplicateTour('${tour.id}')" style="flex:0">Duplicate</button>
                 <button class="admin-btn admin-btn-danger" onclick="deleteTour('${tour.id}')" style="flex:0">Delete</button>
               </div>
             </div>
@@ -1345,6 +1346,30 @@
         const res = await adminAPI('delete', { id });
         if (res.error) throw new Error(res.error);
         showToast('Tour deleted.', 'success');
+        await refreshTours();
+      } catch (err) {
+        showToast('Error: ' + err.message, 'error');
+      }
+    };
+
+    window.duplicateTour = async function(id) {
+      try {
+        const res = await adminAPI('get_by_id', { id });
+        if (res.error) throw new Error(res.error);
+        const t = res.tour;
+        const copy = {};
+        const fields = ['title','title_zh','destination','destination_zh','duration','price_from','currency',
+          'cover_image','gallery','summary','summary_zh','description','description_zh',
+          'itinerary','itinerary_zh','includes','includes_zh','excludes','excludes_zh','dates','dates_zh'];
+        fields.forEach(f => { if (t[f] != null) copy[f] = t[f]; });
+        copy.title = (t.title || '') + ' (Copy)';
+        if (t.title_zh) copy.title_zh = t.title_zh + '（副本）';
+        copy.slug = (t.slug || '') + '-copy-' + Date.now().toString(36);
+        copy.status = 'draft';
+        copy.featured = false;
+        const createRes = await adminAPI('create', copy);
+        if (createRes.error) throw new Error(createRes.error);
+        showToast('Tour duplicated as draft.', 'success');
         await refreshTours();
       } catch (err) {
         showToast('Error: ' + err.message, 'error');
