@@ -589,6 +589,172 @@
     .toast-success { background: #0d9d5c; color: white; }
     .toast-error { background: #d4649a; color: white; }
 
+    /* Help overlay */
+    .help-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 500;
+      background: rgba(10, 37, 64, 0.4);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .help-overlay.open { display: flex; }
+
+    .help-panel {
+      background: var(--white);
+      border-radius: 20px;
+      max-width: 640px;
+      width: 100%;
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 2.5rem;
+      box-shadow: 0 25px 80px rgba(10, 37, 64, 0.15);
+      position: relative;
+    }
+
+    .help-close {
+      position: absolute;
+      top: 1.25rem;
+      right: 1.25rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--text-light);
+      transition: color 0.2s;
+    }
+
+    .help-close:hover { color: var(--deep-ocean); }
+
+    .help-lang-toggle {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .help-lang-btn {
+      padding: 0.4rem 1rem;
+      border-radius: 20px;
+      border: 1px solid rgba(10, 37, 64, 0.12);
+      background: transparent;
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      color: var(--text-mid);
+    }
+
+    .help-lang-btn.active {
+      background: var(--azure);
+      color: white;
+      border-color: var(--azure);
+    }
+
+    .help-panel h2 {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      font-weight: 400;
+      color: var(--deep-ocean);
+      margin-bottom: 0.5rem;
+    }
+
+    .help-panel .help-subtitle {
+      font-size: 0.85rem;
+      color: var(--text-light);
+      margin-bottom: 2rem;
+    }
+
+    .help-section {
+      margin-bottom: 2rem;
+    }
+
+    .help-section h3 {
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--deep-ocean);
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .help-section h3 .help-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--azure);
+      color: white;
+      font-size: 0.75rem;
+      flex-shrink: 0;
+    }
+
+    .help-section p, .help-section li {
+      font-size: 0.85rem;
+      color: var(--text-mid);
+      line-height: 1.7;
+    }
+
+    .help-section ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .help-section li {
+      padding: 0.3rem 0;
+      padding-left: 1.2rem;
+      position: relative;
+    }
+
+    .help-section li::before {
+      content: '•';
+      position: absolute;
+      left: 0;
+      color: var(--azure);
+      font-weight: bold;
+    }
+
+    .help-tip {
+      background: rgba(26, 127, 181, 0.06);
+      border-left: 3px solid var(--azure);
+      padding: 0.75rem 1rem;
+      border-radius: 0 8px 8px 0;
+      margin-top: 1.5rem;
+    }
+
+    .help-tip p {
+      font-size: 0.82rem;
+      color: var(--text-mid);
+      margin: 0;
+    }
+
+    .help-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.55rem 1.1rem;
+      border-radius: 8px;
+      border: 1px solid rgba(10, 37, 64, 0.12);
+      background: var(--white);
+      font-family: var(--font-body);
+      font-size: 0.78rem;
+      font-weight: 500;
+      cursor: pointer;
+      color: var(--text-mid);
+      transition: all 0.2s;
+    }
+
+    .help-btn:hover {
+      border-color: var(--azure);
+      color: var(--azure);
+    }
+
     @media (max-width: 700px) {
       .admin-topbar { padding: 1rem 1.5rem; }
       .admin-grid { padding: 0 1.5rem 2rem; grid-template-columns: 1fr; }
@@ -637,6 +803,10 @@
     <div class="admin-topbar">
       <h1>Tours Dashboard</h1>
       <div class="admin-actions">
+        <button class="help-btn" onclick="openHelp()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+          Help / 帮助
+        </button>
         <button class="admin-btn admin-btn-primary" onclick="openEditor()">+ Add New Tour</button>
         <button class="admin-btn admin-btn-secondary" onclick="openCSVImport()">Import CSV</button>
       </div>
@@ -1323,6 +1493,104 @@
       document.body.appendChild(toast);
       setTimeout(() => toast.remove(), 3500);
     }
+
+    // ===== HELP GUIDE =====
+    function openHelp() {
+      document.getElementById('helpOverlay').classList.add('open');
+    }
+
+    function closeHelp() {
+      document.getElementById('helpOverlay').classList.remove('open');
+    }
+
+    function setHelpLang(lang) {
+      document.querySelectorAll('.help-lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+      document.querySelectorAll('[data-help-en]').forEach(el => {
+        el.innerHTML = lang === 'cn' ? el.dataset.helpCn : el.dataset.helpEn;
+      });
+    }
   </script>
+
+  <!-- HELP OVERLAY -->
+  <div class="help-overlay" id="helpOverlay" onclick="if(event.target===this)closeHelp()">
+    <div class="help-panel">
+      <button class="help-close" onclick="closeHelp()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+      </button>
+
+      <div class="help-lang-toggle">
+        <button class="help-lang-btn active" data-lang="en" onclick="setHelpLang('en')">English</button>
+        <button class="help-lang-btn" data-lang="cn" onclick="setHelpLang('cn')">中文</button>
+      </div>
+
+      <h2 data-help-en="Admin Guide" data-help-cn="管理面板指南">Admin Guide</h2>
+      <p class="help-subtitle" data-help-en="How to manage tours on your website" data-help-cn="如何管理您网站上的旅程">How to manage tours on your website</p>
+
+      <div class="help-section">
+        <h3><span class="help-num">1</span> <span data-help-en="Add a New Tour" data-help-cn="添加新旅程">Add a New Tour</span></h3>
+        <div data-help-en='<ul><li>Click the <strong>"+ Add New Tour"</strong> button at the top</li><li>Fill in the <strong>Basics</strong> tab: title (English &amp; Chinese), destination, duration, price, dates</li><li>The <strong>slug</strong> is auto-generated from the title — it becomes the URL (e.g. /tour/japan-cherry-blossom)</li><li>Add a <strong>cover image</strong> by clicking "Choose File" — this is the main photo shown on cards</li><li>Fill in the other tabs: Details, Itinerary, Includes/Excludes</li><li>Click <strong>Save</strong> when done</li></ul>' data-help-cn='<ul><li>点击顶部的 <strong>"+ Add New Tour"</strong> 按钮</li><li>填写 <strong>Basics（基本信息）</strong>标签页：标题（中英文）、目的地、行程天数、价格、日期</li><li><strong>Slug（网址路径）</strong>会根据标题自动生成，它会成为页面网址（例如 /tour/japan-cherry-blossom）</li><li>点击"Choose File"上传<strong>封面图片</strong>——这是卡片上显示的主图</li><li>填写其他标签页：详情、行程安排、包含/不包含项目</li><li>完成后点击 <strong>Save（保存）</strong></li></ul>'>
+          <ul>
+            <li>Click the <strong>"+ Add New Tour"</strong> button at the top</li>
+            <li>Fill in the <strong>Basics</strong> tab: title (English & Chinese), destination, duration, price, dates</li>
+            <li>The <strong>slug</strong> is auto-generated from the title — it becomes the URL (e.g. /tour/japan-cherry-blossom)</li>
+            <li>Add a <strong>cover image</strong> by clicking "Choose File" — this is the main photo shown on cards</li>
+            <li>Fill in the other tabs: Details, Itinerary, Includes/Excludes</li>
+            <li>Click <strong>Save</strong> when done</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="help-section">
+        <h3><span class="help-num">2</span> <span data-help-en="Make a Tour Visible" data-help-cn="让旅程在网站上显示">Make a Tour Visible</span></h3>
+        <div data-help-en='<ul><li>New tours start as <strong>Draft</strong> (not visible to the public)</li><li>To publish: edit the tour → go to the <strong>Settings</strong> tab → change status to <strong>Live</strong></li><li>To feature on the homepage: check the <strong>"Featured"</strong> box (up to 6 featured tours will show)</li><li>To hide a tour: change status back to <strong>Draft</strong></li></ul>' data-help-cn='<ul><li>新旅程默认为<strong>草稿（Draft）</strong>状态，公众看不到</li><li>发布方法：编辑旅程 → 进入 <strong>Settings（设置）</strong>标签页 → 将状态改为 <strong>Live（上线）</strong></li><li>要在首页展示：勾选 <strong>"Featured（精选）"</strong>（最多展示6个精选旅程）</li><li>要隐藏旅程：将状态改回 <strong>Draft（草稿）</strong></li></ul>'>
+          <ul>
+            <li>New tours start as <strong>Draft</strong> (not visible to the public)</li>
+            <li>To publish: edit the tour → go to the <strong>Settings</strong> tab → change status to <strong>Live</strong></li>
+            <li>To feature on the homepage: check the <strong>"Featured"</strong> box (up to 6 featured tours will show)</li>
+            <li>To hide a tour: change status back to <strong>Draft</strong></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="help-section">
+        <h3><span class="help-num">3</span> <span data-help-en="Edit or Delete a Tour" data-help-cn="编辑或删除旅程">Edit or Delete a Tour</span></h3>
+        <div data-help-en='<ul><li>Click <strong>Edit</strong> on any tour card to modify it</li><li>Click <strong>Delete</strong> to permanently remove a tour (this cannot be undone)</li><li>Changes take effect immediately on the website</li></ul>' data-help-cn='<ul><li>点击任意旅程卡片上的 <strong>Edit（编辑）</strong>进行修改</li><li>点击 <strong>Delete（删除）</strong>永久删除旅程（此操作不可撤销）</li><li>更改会立即在网站上生效</li></ul>'>
+          <ul>
+            <li>Click <strong>Edit</strong> on any tour card to modify it</li>
+            <li>Click <strong>Delete</strong> to permanently remove a tour (this cannot be undone)</li>
+            <li>Changes take effect immediately on the website</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="help-section">
+        <h3><span class="help-num">4</span> <span data-help-en="Bilingual Content" data-help-cn="双语内容">Bilingual Content</span></h3>
+        <div data-help-en='<ul><li>Each text field has an English and Chinese version</li><li>If you leave a Chinese field empty, the English version will be shown to Chinese visitors</li><li>Visitors can switch languages using the EN/中文 toggle on the website</li></ul>' data-help-cn='<ul><li>每个文字字段都有英文和中文版本</li><li>如果中文字段留空，中文访客会看到英文版本</li><li>访客可以通过网站上的 EN/中文 切换按钮来切换语言</li></ul>'>
+          <ul>
+            <li>Each text field has an English and Chinese version</li>
+            <li>If you leave a Chinese field empty, the English version will be shown to Chinese visitors</li>
+            <li>Visitors can switch languages using the EN/中文 toggle on the website</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="help-section">
+        <h3><span class="help-num">5</span> <span data-help-en="Import Multiple Tours (CSV)" data-help-cn="批量导入旅程（CSV）">Import Multiple Tours (CSV)</span></h3>
+        <div data-help-en='<ul><li>Click <strong>"Import CSV"</strong> to add many tours at once</li><li>Prepare a CSV file with columns: title, slug, destination, duration, price_from, summary, description</li><li>You can also include: title_zh, destination_zh, summary_zh, description_zh for Chinese text</li><li>Upload the file → preview the data → click <strong>"Import All"</strong></li></ul>' data-help-cn='<ul><li>点击 <strong>"Import CSV"</strong> 批量添加旅程</li><li>准备一个CSV文件，包含列：title, slug, destination, duration, price_from, summary, description</li><li>也可以添加中文列：title_zh, destination_zh, summary_zh, description_zh</li><li>上传文件 → 预览数据 → 点击 <strong>"Import All（全部导入）"</strong></li></ul>'>
+          <ul>
+            <li>Click <strong>"Import CSV"</strong> to add many tours at once</li>
+            <li>Prepare a CSV file with columns: title, slug, destination, duration, price_from, summary, description</li>
+            <li>You can also include: title_zh, destination_zh, summary_zh, description_zh for Chinese text</li>
+            <li>Upload the file → preview the data → click <strong>"Import All"</strong></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="help-tip">
+        <p data-help-en='<strong>Tip:</strong> Always fill in both English and Chinese titles for the best experience. The cover image should be landscape format (wider than tall) for best results.' data-help-cn='<strong>小贴士：</strong>建议同时填写中英文标题以获得最佳体验。封面图片建议使用横向格式（宽大于高）效果最好。'><strong>Tip:</strong> Always fill in both English and Chinese titles for the best experience. The cover image should be landscape format (wider than tall) for best results.</p>
+      </div>
+    </div>
+  </div>
+
 </body>
 </html>
